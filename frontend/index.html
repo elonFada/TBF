@@ -1,0 +1,1183 @@
+<!doctype html>
+<html class="dark" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+      name="viewport"
+    />
+    <title>TheBrave Finance | Forging Trust in Digital Finance</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="images/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="images/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="images/favicon-16x16.png"
+    />
+    <link rel="manifest" href="images/site.webmanifest" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#1152d4",
+              "emerald-accent": "#10b981",
+              "background-light": "#f6f6f8",
+              "background-dark": "#101622",
+              "surface-dark": "#192233",
+              "border-dark": "#324467",
+            },
+            fontFamily: {
+              display: ["Manrope", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Manrope", sans-serif;
+      }
+      .glass-panel {
+        background: rgba(25, 34, 51, 0.7);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(50, 68, 103, 0.5);
+      }
+      .lucide {
+        width: 1em;
+        height: 1em;
+        stroke-width: 1.5;
+        display: inline-block;
+        vertical-align: middle;
+        fill: none;
+      }
+      .icon-lg {
+        width: 1.75rem;
+        height: 1.75rem;
+      }
+      .icon-xl {
+        width: 2rem;
+        height: 2rem;
+      }
+      .icon-2xl {
+        width: 2.5rem;
+        height: 2.5rem;
+      }
+      /* mobile menu styles */
+      .mobile-menu-open {
+        overflow: hidden;
+      }
+      #mobileNav {
+        transition:
+          transform 0.3s ease-in-out,
+          opacity 0.2s,
+          visibility 0.2s;
+      }
+
+      /* Sheet styles (identical to login page) */
+      .sheet-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(4px);
+        z-index: 100;
+        opacity: 0;
+        visibility: hidden;
+        transition:
+          opacity 0.35s ease,
+          visibility 0.35s ease;
+      }
+      .sheet-overlay.open {
+        opacity: 1;
+        visibility: visible;
+      }
+      .sheet {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 101;
+        background: #0f1825;
+        border-top: 1px solid #243049;
+        border-radius: 1.5rem 1.5rem 0 0;
+        max-height: 85vh;
+        overflow-y: auto;
+        transform: translateY(100%);
+        transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+      }
+      .sheet.open {
+        transform: translateY(0);
+      }
+      .sheet::-webkit-scrollbar {
+        width: 4px;
+      }
+      .sheet::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .sheet::-webkit-scrollbar-thumb {
+        background: #243049;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display transition-colors duration-300"
+  >
+    <!-- Top Navigation Bar (mobile‑adapted) -->
+    <header
+      class="sticky top-0 z-50 w-full border-b border-border-dark bg-background-dark/80 backdrop-blur-md"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <!-- logo -->
+          <div class="flex items-center gap-3">
+            <img
+              src="images/TBF-LOGO.png"
+              alt="The Brave Finance Logo"
+              class="w-8 h-8 object-contain"
+            />
+            <h2
+              class="text-white text-xl font-extrabold tracking-tight whitespace-nowrap"
+            >
+              THEBRAVE <span class="text-primary">FINANCE</span>
+            </h2>
+          </div>
+
+          <!-- desktop navigation (hidden on mobile) -->
+          <nav class="hidden md:flex items-center gap-8">
+            <a
+              class="text-slate-300 hover:text-white text-sm font-medium transition-colors"
+              href="index.html"
+              >Home</a
+            >
+            <a
+              class="text-slate-300 hover:text-white text-sm font-medium transition-colors"
+              href="aboutus.html"
+              >About</a
+            >
+            <a
+              class="text-slate-300 hover:text-white text-sm font-medium transition-colors"
+              href="services.html"
+              >Services</a
+            >
+            <a
+              class="text-slate-300 hover:text-white text-sm font-medium transition-colors"
+              href="vip.html"
+              >VIP Signals</a
+            >
+            <a
+              class="text-slate-300 hover:text-white text-sm font-medium transition-colors"
+              href="recovery.html"
+              >Recovery</a
+            >
+            <a
+              class="text-slate-300 hover:text-white text-sm font-medium transition-colors"
+              href="contactus.html"
+              >Contact</a
+            >
+          </nav>
+
+          <!-- right side: login/register + hamburger (mobile) -->
+          <div class="flex items-center gap-2 sm:gap-3">
+            <!-- desktop login/register (hidden on xs, visible sm) -->
+            <a
+              href="login.html"
+              class="hidden sm:flex px-4 py-2 text-sm font-bold text-white bg-surface-dark hover:bg-slate-700 rounded-lg transition-all items-center justify-center"
+              >Login</a
+            >
+            <a
+              href="register.html"
+              class="hidden sm:flex px-5 py-2 text-sm font-bold text-white bg-primary hover:bg-blue-700 rounded-lg transition-all shadow-lg shadow-primary/20 items-center justify-center"
+              >Register</a
+            >
+
+            <!-- mobile hamburger button -->
+            <button
+              id="menuToggle"
+              class="block md:hidden p-2 text-slate-300 hover:text-white focus:outline-none"
+              aria-label="menu"
+            >
+              <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- mobile menu drawer (hidden by default) -->
+      <div
+        id="mobileNav"
+        class="absolute inset-x-0 top-16 bg-surface-dark border-b border-border-dark shadow-xl md:hidden invisible opacity-0 -translate-y-full transition-all duration-300 ease-in-out"
+      >
+        <nav class="flex flex-col px-6 py-6 space-y-4 text-base">
+          <a
+            class="text-slate-200 hover:text-white py-2 font-medium border-b border-border-dark/40"
+            href="index.html"
+            >Home</a
+          >
+          <a
+            class="text-slate-200 hover:text-white py-2 font-medium border-b border-border-dark/40"
+            href="aboutus.html"
+            >About</a
+          >
+          <a
+            class="text-slate-200 hover:text-white py-2 font-medium border-b border-border-dark/40"
+            href="services.html"
+            >Services</a
+          >
+          <a
+            class="text-slate-200 hover:text-white py-2 font-medium border-b border-border-dark/40"
+            href="vip.html"
+            >VIP Signals</a
+          >
+          <a
+            class="text-slate-200 hover:text-white py-2 font-medium border-b border-border-dark/40"
+            href="recovery.html"
+            >Recovery</a
+          >
+          <a
+            class="text-slate-200 hover:text-white py-2 font-medium border-b border-border-dark/40"
+            href="contactus.html"
+            >Contact</a
+          >
+          <div class="flex flex-col sm:hidden pt-4 gap-3">
+            <a
+              href="login.html"
+              class="w-full text-center px-4 py-3 text-sm font-bold text-white bg-surface-dark border border-border-dark rounded-lg"
+              >Login</a
+            >
+            <a
+              href="register.html"
+              class="w-full text-center px-5 py-3 text-sm font-bold text-white bg-primary rounded-lg shadow-lg shadow-primary/20"
+              >Register</a
+            >
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero Section -->
+      <section class="relative overflow-hidden pt-16 pb-24 lg:pt-32 lg:pb-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div class="space-y-8">
+              <div
+                class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-widest"
+              >
+                <span class="relative flex h-2 w-2">
+                  <span
+                    class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-accent opacity-75"
+                  ></span>
+                  <span
+                    class="relative inline-flex rounded-full h-2 w-2 bg-emerald-accent"
+                  ></span>
+                </span>
+                Trusted by 50,000+ Traders
+              </div>
+              <h1
+                class="text-white text-4xl sm:text-5xl lg:text-7xl font-black leading-tight tracking-tight"
+              >
+                Forging Trust in
+                <span class="text-primary">Digital Finance</span>
+              </h1>
+              <p
+                class="text-slate-400 text-base sm:text-lg lg:text-xl max-w-xl leading-relaxed"
+              >
+                Experience premium brokerage benefits with integrated financial
+                services designed for your long-term success. Secure,
+                transparent, and professional.
+              </p>
+              <div class="flex flex-wrap gap-4">
+                <a
+                  href="register.html"
+                  class="px-8 py-4 bg-primary text-white font-bold rounded-xl hover:scale-105 transition-transform shadow-xl shadow-primary/30 inline-block text-center w-full sm:w-auto"
+                  >Start Trading Now</a
+                >
+              </div>
+            </div>
+            <div class="relative">
+              <div
+                class="absolute -inset-4 bg-primary/20 blur-3xl rounded-full"
+              ></div>
+              <div
+                class="relative aspect-square rounded-2xl overflow-hidden border border-border-dark shadow-2xl bg-surface-dark"
+              >
+                <div
+                  class="absolute inset-0 bg-gradient-to-tr from-background-dark via-transparent to-primary/10"
+                ></div>
+                <img
+                  alt="Trading Dashboard"
+                  class="w-full h-full object-cover opacity-60"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDiLBSGmj1254qQ5KM80YvpKQeOcR7Klhica_6NEqYIdDXbZT9mZhLoMdh82fDD2ZNbhlxmxrYQ0RffgsMMmYuJmIH_mhV4ZPH1NmkhposzU6H5CXI0IPQISePOswz87gw4KU0hzn1OgpmCCnRIBephMrpgy0nkspeSqHI0xHAIrkQ0HJGsO0HNMD9q0xHloZbasSQ6T7MTqshqGd3p2ibcuVOQ0K_k0g607k_1--x75mOihg3wNmDlNlHlXlO3f9EDUhdzlHKTuas"
+                />
+                <div
+                  class="absolute bottom-8 left-8 right-8 p-6 glass-panel rounded-xl flex justify-between items-center"
+                >
+                  <div>
+                    <p
+                      class="text-slate-400 text-xs uppercase font-bold tracking-wider"
+                    >
+                      Total Volume
+                    </p>
+                    <p class="text-white text-2xl font-black">$4.2B+</p>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-emerald-accent text-xs font-bold">+12.5%</p>
+                    <p class="text-slate-500 text-[10px]">Last 24h</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Services Section -->
+      <section class="py-24 bg-background-dark/50" id="services">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+            <h2
+              class="text-primary font-bold text-sm uppercase tracking-widest"
+            >
+              Our Ecosystem
+            </h2>
+            <h3 class="text-white text-3xl sm:text-4xl font-bold">
+              Specialized Financial Services
+            </h3>
+            <p class="text-slate-400">
+              Comprehensive tools and expert support to navigate the
+              complexities of global markets.
+            </p>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Card 1 -->
+            <div
+              class="p-8 rounded-2xl bg-surface-dark border border-border-dark hover:border-primary/50 transition-all group"
+            >
+              <div
+                class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary transition-colors"
+              >
+                <i
+                  data-lucide="bar-chart-2"
+                  class="text-primary group-hover:text-white w-6 h-6"
+                ></i>
+              </div>
+              <h4 class="text-white text-xl font-bold mb-3">
+                MT5 Account Access
+              </h4>
+              <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                Gain access to professional-grade MetaTrader 5 platforms with
+                ultra-low latency execution and deep liquidity.
+              </p>
+            </div>
+            <!-- Card 2 -->
+            <div
+              class="p-8 rounded-2xl bg-surface-dark border border-border-dark hover:border-primary/50 transition-all group"
+            >
+              <div
+                class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary transition-colors"
+              >
+                <i
+                  data-lucide="briefcase"
+                  class="text-primary group-hover:text-white w-6 h-6"
+                ></i>
+              </div>
+              <h4 class="text-white text-xl font-bold mb-3">Managed Trading</h4>
+              <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                Expert portfolio management assistance for those looking for a
+                hands-off approach to wealth building.
+              </p>
+            </div>
+            <!-- Card 3 -->
+            <div
+              class="p-8 rounded-2xl bg-surface-dark border border-border-dark hover:border-primary/50 transition-all group"
+            >
+              <div
+                class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary transition-colors"
+              >
+                <i
+                  data-lucide="star"
+                  class="text-primary group-hover:text-white w-6 h-6"
+                ></i>
+              </div>
+              <h4 class="text-white text-xl font-bold mb-3">
+                VIP Trading Signals
+              </h4>
+              <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                Receive high-accuracy market signals generated by our veteran
+                analysts and proprietary AI algorithms.
+              </p>
+            </div>
+            <!-- Card 4 -->
+            <div
+              class="p-8 rounded-2xl bg-surface-dark border border-border-dark hover:border-primary/50 transition-all group"
+            >
+              <div
+                class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary transition-colors"
+              >
+                <i
+                  data-lucide="shield"
+                  class="text-primary group-hover:text-white w-6 h-6"
+                ></i>
+              </div>
+              <h4 class="text-white text-xl font-bold mb-3">Fund Recovery</h4>
+              <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                Dedicated legal and technical support for retrieving lost or
+                inaccessible digital assets globally.
+              </p>
+            </div>
+            <!-- Card 5 -->
+            <div
+              class="p-8 rounded-2xl bg-surface-dark border border-border-dark hover:border-primary/50 transition-all group"
+            >
+              <div
+                class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary transition-colors"
+              >
+                <i
+                  data-lucide="headset"
+                  class="text-primary group-hover:text-white w-6 h-6"
+                ></i>
+              </div>
+              <h4 class="text-white text-xl font-bold mb-3">
+                24/7 Client Support
+              </h4>
+              <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                A dedicated team of experts ready to assist you with any
+                technical or account-related inquiries around the clock.
+              </p>
+            </div>
+            <!-- Card 6 -->
+            <div
+              class="p-8 rounded-2xl bg-primary/10 border border-primary/30 flex flex-col justify-center items-center text-center"
+            >
+              <h4 class="text-white text-xl font-bold mb-2">
+                Ready to Upgrade?
+              </h4>
+              <p class="text-slate-400 text-sm mb-6">
+                Join thousands of successful investors today.
+              </p>
+              <a
+                href="register.html"
+                class="w-full py-3 bg-primary text-white font-bold rounded-xl shadow-lg shadow-primary/20 inline-block text-center"
+                >Open Free Account</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Benefits Section -->
+      <section class="py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="grid lg:grid-cols-2 gap-16 items-center">
+            <div class="order-2 lg:order-1 relative">
+              <div class="grid grid-cols-2 gap-4">
+                <div class="space-y-4">
+                  <div
+                    class="p-6 bg-surface-dark rounded-2xl border border-border-dark"
+                  >
+                    <i
+                      data-lucide="lock"
+                      class="text-emerald-accent w-8 h-8 mb-4"
+                    ></i>
+                    <h5 class="text-white font-bold">Secure Infrastructure</h5>
+                    <p class="text-slate-400 text-xs mt-2">
+                      Military-grade encryption for all transactions.
+                    </p>
+                  </div>
+                  <div
+                    class="p-6 bg-surface-dark rounded-2xl border border-border-dark"
+                  >
+                    <i
+                      data-lucide="trending-up"
+                      class="text-primary w-8 h-8 mb-4"
+                    ></i>
+                    <h5 class="text-white font-bold">Expert Analysis</h5>
+                    <p class="text-slate-400 text-xs mt-2">
+                      Deep insights from 15+ years of market data.
+                    </p>
+                  </div>
+                </div>
+                <div class="space-y-4 mt-8">
+                  <div
+                    class="p-6 bg-surface-dark rounded-2xl border border-border-dark"
+                  >
+                    <i data-lucide="eye" class="text-primary w-8 h-8 mb-4"></i>
+                    <h5 class="text-white font-bold">Full Transparency</h5>
+                    <p class="text-slate-400 text-xs mt-2">
+                      Real-time reporting and no hidden fees.
+                    </p>
+                  </div>
+                  <div
+                    class="p-6 bg-primary rounded-2xl shadow-xl shadow-primary/20"
+                  >
+                    <i data-lucide="users" class="text-white w-8 h-8 mb-4"></i>
+                    <h5 class="text-white font-bold">Elite Community</h5>
+                    <p class="text-blue-100 text-xs mt-2">
+                      Network with top-tier global investors.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="order-1 lg:order-2 space-y-6">
+              <h2
+                class="text-primary font-bold text-sm uppercase tracking-widest"
+              >
+                Why TheBrave Finance
+              </h2>
+              <h3
+                class="text-white text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight"
+              >
+                The Emerald Standard for Digital Wealth
+              </h3>
+              <p class="text-slate-400 text-base sm:text-lg leading-relaxed">
+                We don't just provide access to markets; we provide the
+                strategic advantage you need to excel. Our platform combines
+                cutting-edge technology with human expertise to ensure your
+                portfolio stays ahead of the curve.
+              </p>
+              <ul class="space-y-4">
+                <li class="flex items-start gap-3">
+                  <i
+                    data-lucide="check-circle"
+                    class="text-emerald-accent w-5 h-5 flex-shrink-0"
+                  ></i
+                  ><span class="text-slate-300 font-medium text-sm"
+                    >Regulated and compliant across multiple
+                    jurisdictions.</span
+                  >
+                </li>
+                <li class="flex items-start gap-3">
+                  <i
+                    data-lucide="check-circle"
+                    class="text-emerald-accent w-5 h-5"
+                  ></i
+                  ><span class="text-slate-300 font-medium text-sm"
+                    >Institutional-grade liquidity for all retail traders.</span
+                  >
+                </li>
+                <li class="flex items-start gap-3">
+                  <i
+                    data-lucide="check-circle"
+                    class="text-emerald-accent w-5 h-5"
+                  ></i
+                  ><span class="text-slate-300 font-medium text-sm"
+                    >Personalized wealth management strategies.</span
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- How It Works -->
+      <section class="py-24 bg-surface-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-16">
+            <h2 class="text-white text-3xl font-bold">
+              Get Started in Minutes
+            </h2>
+            <p class="text-slate-400 mt-4">
+              Simple onboarding process to start your financial journey.
+            </p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+            <div
+              class="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-gradient-to-r from-primary/0 via-primary/50 to-primary/0"
+            ></div>
+            <div class="relative z-10 text-center space-y-4">
+              <div
+                class="w-16 h-16 rounded-full bg-background-dark border-4 border-primary flex items-center justify-center text-white font-black text-xl mx-auto shadow-lg shadow-primary/20"
+              >
+                1
+              </div>
+              <h5 class="text-white font-bold">Register</h5>
+              <p class="text-slate-500 text-sm">
+                Create your secure account in less than 2 minutes.
+              </p>
+            </div>
+            <div class="relative z-10 text-center space-y-4">
+              <div
+                class="w-16 h-16 rounded-full bg-background-dark border-4 border-primary flex items-center justify-center text-white font-black text-xl mx-auto shadow-lg shadow-primary/20"
+              >
+                2
+              </div>
+              <h5 class="text-white font-bold">Fund</h5>
+              <p class="text-slate-500 text-sm">
+                Deposit funds using multiple secure payment options.
+              </p>
+            </div>
+            <div class="relative z-10 text-center space-y-4">
+              <div
+                class="w-16 h-16 rounded-full bg-emerald-accent border-4 border-emerald-400 flex items-center justify-center text-white font-black text-xl mx-auto shadow-lg shadow-emerald-accent/20"
+              >
+                3
+              </div>
+              <h5 class="text-white font-bold">Trade</h5>
+              <p class="text-slate-500 text-sm">
+                Access the markets and start growing your wealth.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIP Promotion -->
+      <section class="py-24 relative overflow-hidden" id="vip">
+        <div class="absolute inset-0 bg-primary/5"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div
+            class="bg-gradient-to-br from-surface-dark to-background-dark rounded-3xl border border-primary/30 p-8 lg:p-16"
+          >
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+              <div class="space-y-6">
+                <span
+                  class="inline-block px-4 py-1 rounded-full bg-emerald-accent/20 text-emerald-accent text-xs font-black uppercase tracking-widest"
+                  >Premium Offering</span
+                >
+                <h3 class="text-white text-4xl font-bold">
+                  The Elite VIP Signals Room
+                </h3>
+                <p class="text-slate-400 text-lg">
+                  Gain an unfair advantage with real-time entry and exit points
+                  shared by our lead market strategists. Average 85% accuracy
+                  across Major FX Pairs and Commodities.
+                </p>
+                <div class="grid grid-cols-2 gap-6 py-4">
+                  <div class="space-y-2">
+                    <p class="text-primary text-3xl font-black">20+</p>
+                    <p
+                      class="text-slate-500 text-sm font-bold uppercase tracking-widest"
+                    >
+                      Signals Weekly
+                    </p>
+                  </div>
+                  <div class="space-y-2">
+                    <p class="text-primary text-3xl font-black">24/5</p>
+                    <p
+                      class="text-slate-500 text-sm font-bold uppercase tracking-widest"
+                    >
+                      Expert Access
+                    </p>
+                  </div>
+                </div>
+                <a
+                  href="register.html"
+                  class="w-full sm:w-auto px-10 py-4 bg-emerald-accent hover:bg-emerald-600 text-white font-bold rounded-xl transition-all shadow-xl shadow-emerald-accent/20 inline-block text-center"
+                  >Join the VIP Room</a
+                >
+              </div>
+              <div
+                class="relative rounded-2xl overflow-hidden border border-border-dark"
+              >
+                <img
+                  alt="VIP Platform"
+                  class="w-full h-full object-cover"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWhFJ63rP8Qy-e4fRSgZpplbqX9uxZA5oDO12FjyCSdXO2lIUuQI0vIo119mUdAdf9D-oplKII9RyUNlE-l0a2frSrzZFb1qwJ2o0DFPeZE2RjBNIZkZWHtRZCJUiK9dFUj5lG4IicQyRZCfu3165E8PeDXBvKM6Nw9J_9tdhajKX7mzvHCSTAR9EpDzIXc4ACDiACM5e9bdKhsQQLdvzGkJ0Y1PU8kaPzAx7HtXk_K_8IqTlIeYdP12RoAgIsXeDnWrp3HviLdsY"
+                />
+                <div
+                  class="absolute inset-0 bg-primary/20 mix-blend-multiply"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Testimonials -->
+      <section class="py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-16">
+            <h3 class="text-white text-3xl font-bold">Trusted Globally</h3>
+          </div>
+          <div class="grid md:grid-cols-3 gap-8">
+            <div
+              class="p-8 rounded-2xl bg-surface-dark/50 border border-border-dark"
+            >
+              <div class="flex gap-1 text-emerald-accent mb-4">
+                <i
+                  data-lucide="star"
+                  class="fill-current text-emerald-accent w-5 h-5"
+                ></i>
+                <i
+                  data-lucide="star"
+                  class="fill-current text-emerald-accent w-5 h-5"
+                ></i>
+                <i
+                  data-lucide="star"
+                  class="fill-current text-emerald-accent w-5 h-5"
+                ></i>
+                <i
+                  data-lucide="star"
+                  class="fill-current text-emerald-accent w-5 h-5"
+                ></i>
+                <i
+                  data-lucide="star"
+                  class="fill-current text-emerald-accent w-5 h-5"
+                ></i>
+              </div>
+              <p class="text-slate-300 italic mb-6">
+                "The fund recovery team was phenomenal. I thought my assets were
+                gone forever after a breach, but they guided me through every
+                step to get them back."
+              </p>
+              <div class="flex items-center gap-4">
+                <div
+                  class="w-10 h-10 rounded-full bg-primary/20 border border-primary/50"
+                ></div>
+                <div>
+                  <h6 class="text-white font-bold text-sm">David M.</h6>
+                  <p class="text-slate-500 text-xs">Crypto Investor, UK</p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="p-8 rounded-2xl bg-surface-dark/50 border border-border-dark"
+            >
+              <div class="flex gap-1 text-emerald-accent mb-4">
+                <i
+                  data-lucide="star"
+                  class="fill-current text-emerald-accent w-5 h-5"
+                ></i>
+                <i
+                  data-lucide="star"
+                  class="fill-current text-emerald-accent w-5 h-5"
+                ></i>
+                <i
+                  data-lucide="star"
+                  class="fill-current text-emerald-accent w-5 h-5"
+                ></i>
+                <i
+                  data-lucide="star"
+                  class="fill-current text-emerald-accent w-5 h-5"
+                ></i>
+                <i
+                  data-lucide="star"
+                  class="fill-current text-emerald-accent w-5 h-5"
+                ></i>
+              </div>
+              <p class="text-slate-300 italic mb-6">
+                "The VIP signals are the most consistent I've ever used. The
+                accuracy on XAUUSD is unmatched. Highly recommended for busy
+                professionals."
+              </p>
+              <div class="flex items-center gap-4">
+                <div
+                  class="w-10 h-10 rounded-full bg-primary/20 border border-primary/50"
+                ></div>
+                <div>
+                  <h6 class="text-white font-bold text-sm">Sarah Chen</h6>
+                  <p class="text-slate-500 text-xs">Prop Trader, SG</p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="p-8 rounded-2xl bg-surface-dark/50 border border-border-dark"
+            >
+              <div class="flex gap-1 text-emerald-accent mb-4">
+                <i
+                  data-lucide="star"
+                  class="fill-current text-emerald-accent w-5 h-5"
+                ></i>
+                <i
+                  data-lucide="star"
+                  class="fill-current text-emerald-accent w-5 h-5"
+                ></i>
+                <i
+                  data-lucide="star"
+                  class="fill-current text-emerald-accent w-5 h-5"
+                ></i>
+                <i
+                  data-lucide="star"
+                  class="fill-current text-emerald-accent w-5 h-5"
+                ></i>
+                <i
+                  data-lucide="star"
+                  class="fill-current text-emerald-accent w-5 h-5"
+                ></i>
+              </div>
+              <p class="text-slate-300 italic mb-6">
+                "The managed trading assistance helped me diversify my portfolio
+                during a volatile market. Their risk management strategies are
+                top-tier."
+              </p>
+              <div class="flex items-center gap-4">
+                <div
+                  class="w-10 h-10 rounded-full bg-primary/20 border border-primary/50"
+                ></div>
+                <div>
+                  <h6 class="text-white font-bold text-sm">Marcus Vogt</h6>
+                  <p class="text-slate-500 text-xs">Wealth Manager, DE</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="mt-20 flex flex-wrap justify-center items-center gap-12 grayscale opacity-40"
+          >
+            <span class="text-white font-black text-2xl tracking-tighter italic"
+              >FINRA COMPLIANT</span
+            >
+            <span class="text-white font-black text-2xl tracking-tighter italic"
+              >SEC REGISTERED</span
+            >
+            <span class="text-white font-black text-2xl tracking-tighter italic"
+              >PCI DSS SECURE</span
+            >
+            <span class="text-white font-black text-2xl tracking-tighter italic"
+              >GDPR READY</span
+            >
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section class="py-24 bg-background-dark/80">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-16">
+            <h3 class="text-white text-3xl font-bold">
+              Frequently Asked Questions
+            </h3>
+          </div>
+          <div class="space-y-4">
+            <div
+              class="p-6 rounded-xl bg-surface-dark border border-border-dark"
+            >
+              <div class="flex justify-between items-center cursor-pointer">
+                <h5 class="text-white font-bold">
+                  Is TheBrave Finance regulated?
+                </h5>
+                <i data-lucide="chevron-down" class="text-primary w-5 h-5"></i>
+              </div>
+              <p class="mt-4 text-slate-400 text-sm">
+                Yes, we operate under strict regulatory frameworks in the
+                jurisdictions we serve, ensuring the highest standards of
+                financial security and compliance.
+              </p>
+            </div>
+            <div
+              class="p-6 rounded-xl bg-surface-dark border border-border-dark"
+            >
+              <div class="flex justify-between items-center cursor-pointer">
+                <h5 class="text-white font-bold">
+                  How does the Fund Recovery service work?
+                </h5>
+                <i data-lucide="chevron-down" class="text-primary w-5 h-5"></i>
+              </div>
+              <p class="mt-4 text-slate-400 text-sm">
+                Our team of cyber-forensics and legal experts works to trace
+                lost assets and coordinate with exchanges and authorities to
+                facilitate retrievals.
+              </p>
+            </div>
+            <div
+              class="p-6 rounded-xl bg-surface-dark border border-border-dark"
+            >
+              <div class="flex justify-between items-center cursor-pointer">
+                <h5 class="text-white font-bold">
+                  What are the fees for VIP Signals?
+                </h5>
+                <i data-lucide="chevron-down" class="text-primary w-5 h-5"></i>
+              </div>
+              <p class="mt-4 text-slate-400 text-sm">
+                We offer multiple subscription tiers starting from monthly to
+                lifetime access. Contact support for our current institutional
+                and retail rates.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Final CTA -->
+      <section class="py-24">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div
+            class="relative rounded-3xl overflow-hidden bg-primary px-8 py-16 text-center text-white"
+          >
+            <div
+              class="absolute inset-0 bg-gradient-to-r from-blue-700 to-primary"
+            ></div>
+            <div class="relative z-10 space-y-8">
+              <h2 class="text-4xl lg:text-5xl font-black">
+                Secure Your Financial Future Today
+              </h2>
+              <p class="text-blue-100 text-lg max-w-2xl mx-auto">
+                Join the ranks of successful traders and investors who trust
+                TheBrave Finance for their digital asset management.
+              </p>
+              <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a
+                  href="register.html"
+                  class="px-10 py-4 bg-white text-primary font-bold rounded-xl shadow-2xl hover:bg-slate-50 transition-colors inline-block"
+                >
+                  Create Free Account
+                </a>
+
+                <a
+                  href="https://wa.me/1234567890?text=Hello%20I%27d%20like%20to%20speak%20with%20an%20expert"
+                  target="_blank"
+                  class="px-10 py-4 bg-primary border-2 border-white/30 text-white font-bold rounded-xl hover:bg-white/10 transition-colors inline-block"
+                >
+                  Speak with an Expert
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-border-dark bg-background-dark pt-16 pb-8">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div
+          class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-10 mb-14"
+        >
+          <div class="col-span-2">
+            <div class="flex items-center gap-3 mb-5">
+              <img
+                src="images/TBF-LOGO.png"
+                alt="TheBrave Finance Logo"
+                class="w-9 h-9 object-contain"
+              />
+              <h2 class="text-white text-xl font-extrabold tracking-tight">
+                THEBRAVE FINANCE
+              </h2>
+            </div>
+            <p class="text-slate-500 text-sm max-w-sm leading-relaxed">
+              Premium trading solutions, structured financial services, and a
+              better client experience built around clarity and trust.
+            </p>
+          </div>
+
+          <div>
+            <h6 class="text-white font-bold mb-5">Company</h6>
+            <ul class="space-y-3 text-sm text-slate-500">
+              <li>
+                <a
+                  href="aboutus.html"
+                  class="hover:text-primary transition-colors"
+                  >About Us</a
+                >
+              </li>
+              <li>
+                <!-- Privacy Policy opens sheet -->
+                <button
+                  onclick="openSheet('privacy')"
+                  class="hover:text-primary transition-colors text-left"
+                >
+                  Privacy Policy
+                </button>
+              </li>
+              <li>
+                <!-- Terms of Service opens sheet -->
+                <button
+                  onclick="openSheet('terms')"
+                  class="hover:text-primary transition-colors text-left"
+                >
+                  Terms of Service
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h6 class="text-white font-bold mb-5">Services</h6>
+            <ul class="space-y-3 text-sm text-slate-500">
+              <li>
+                <a
+                  href="services.html"
+                  class="hover:text-primary transition-colors"
+                  >Services</a
+                >
+              </li>
+              <li>
+                <a href="vip.html" class="hover:text-primary transition-colors"
+                  >VIP Signals</a
+                >
+              </li>
+              <li>
+                <a
+                  href="recovery.html"
+                  class="hover:text-primary transition-colors"
+                  >Recovery</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h6 class="text-white font-bold mb-5">Support</h6>
+            <ul class="space-y-3 text-sm text-slate-500">
+              <li>
+                <a
+                  href="contactus.html"
+                  class="hover:text-primary transition-colors"
+                  >Contact Support</a
+                >
+              </li>
+              <li>
+                <a
+                  href="login.html"
+                  class="hover:text-primary transition-colors"
+                  >Client Login</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="pt-8 border-t border-border-dark text-center">
+          <p class="text-slate-500 text-xs">
+            © 2000 TheBrave Finance Integrated Services. All rights reserved.
+            &nbsp;·&nbsp;
+            <button
+              onclick="openSheet('privacy')"
+              class="hover:text-primary transition-colors"
+            >
+              Privacy Policy
+            </button>
+            &nbsp;·&nbsp;
+            <button
+              onclick="openSheet('terms')"
+              class="hover:text-primary transition-colors"
+            >
+              Terms of Service
+            </button>
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Sheet Overlay (global) -->
+    <div id="sheetOverlay" class="sheet-overlay" onclick="closeSheet()"></div>
+
+    <!-- Bottom Sheet (global) -->
+    <div id="bottomSheet" class="sheet">
+      <div
+        class="sticky top-0 bg-[#0f1825] px-6 pt-5 pb-4 border-b border-[#1e293b] flex items-center justify-between"
+      >
+        <div class="flex items-center gap-3">
+          <div
+            class="h-9 w-9 rounded-xl bg-primary/20 flex items-center justify-center"
+          >
+            <i data-lucide="file-text" class="w-4 h-4 text-primary"></i>
+          </div>
+          <h3 id="sheetTitle" class="text-white font-extrabold text-base"></h3>
+        </div>
+        <button
+          onclick="closeSheet()"
+          class="text-slate-400 hover:text-white p-1.5 rounded-lg hover:bg-white/5 transition-all"
+        >
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div class="flex justify-center pt-2 pb-1">
+        <div class="w-10 h-1 bg-[#243049] rounded-full"></div>
+      </div>
+      <div
+        id="sheetContent"
+        class="px-6 pb-10 pt-2 text-slate-300 text-sm leading-relaxed space-y-6"
+      ></div>
+    </div>
+
+    <!-- Sheet content (mirroring login page style) -->
+    <script>
+      // Complete terms and privacy content exactly as shown in login.html
+      const CONTENT = {
+        terms: {
+          title: "Terms of Service",
+          html: `
+            <p class="text-slate-400 text-xs">Last updated: January 1, 2026</p>
+            <div class="space-y-2"><h4 class="text-white font-bold">1. Acceptance of Terms</h4><p>By accessing or using TheBrave Finance ("the Platform"), you agree to be bound by these Terms of Service. If you do not agree to any part of these terms, you may not access or use our services.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">2. Description of Services</h4><p>TheBrave Finance provides financial trading tools, market analysis, VIP signal subscriptions, and account management features. Our platform is designed to assist traders in making informed decisions. We do not provide regulated financial advice.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">3. Eligibility</h4><p>You must be at least 18 years of age to use our services. By registering, you represent and warrant that you are legally permitted to engage in trading activities in your jurisdiction. TheBrave Finance reserves the right to refuse service to anyone at any time.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">4. Account Responsibility</h4><p>You are solely responsible for maintaining the confidentiality of your account credentials, including your MT5 login ID and password. Any activity that occurs under your account is your responsibility. Notify us immediately if you suspect unauthorized access.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">5. Deposits & Payments</h4><p>All deposits are processed in cryptocurrency. Once submitted, deposits cannot be reversed except at the sole discretion of TheBrave Finance. Proof of payment must be accurate and valid. Fraudulent submissions will result in immediate account termination.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">6. VIP Signals</h4><p>VIP signals are provided for informational purposes only. Past performance of any signal does not guarantee future results. All trading involves risk and you may lose some or all of your invested capital. TheBrave Finance is not liable for any trading losses incurred using our signals.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">7. Prohibited Activities</h4><p>You agree not to: use the platform for any unlawful purpose; attempt to gain unauthorized access to any part of the platform; reverse engineer or exploit the platform; or use automated systems to access our services without prior written consent.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">8. Termination</h4><p>We reserve the right to suspend or terminate your account at any time, with or without notice, for conduct that we believe violates these Terms or is harmful to other users, us, or third parties.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">9. Limitation of Liability</h4><p>TheBrave Finance shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of or inability to use the platform, even if we have been advised of the possibility of such damages.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">10. Changes to Terms</h4><p>We reserve the right to modify these Terms at any time. Continued use of the platform after any changes constitutes your acceptance of the new terms. We encourage you to review these Terms periodically.</p></div>
+            <div class="p-4 rounded-xl bg-primary/10 border border-primary/20"><p class="text-blue-400 text-xs">If you have questions about these Terms, please contact our support team through the platform.</p></div>
+          `,
+        },
+        privacy: {
+          title: "Privacy Policy",
+          html: `
+            <p class="text-slate-400 text-xs">Last updated: January 1, 2026</p>
+            <div class="space-y-2"><h4 class="text-white font-bold">1. Introduction</h4><p>TheBrave Finance ("we", "our", "us") is committed to protecting your personal information. This Privacy Policy explains how we collect, use, store, and protect your data when you use our platform.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">2. Information We Collect</h4><p>We collect information you provide directly, including your name, email address, phone number, and profile photo (via Google OAuth). We also collect transactional data such as deposit records, payment proofs, and account activity on our platform.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">3. How We Use Your Information</h4><p>Your information is used to: create and manage your account; process and verify deposits; assign and manage your MT5 trading accounts; deliver VIP signals and subscription services; communicate important account updates; and improve our platform and services.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">4. Google OAuth</h4><p>We use Google's OAuth 2.0 for authentication. When you sign in with Google, we receive your name, email address, and profile photo. We do not have access to your Google password or any other Google account data beyond what is required for authentication.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">5. Data Storage & Security</h4><p>Your data is stored securely on encrypted servers. We use industry-standard security measures including HTTPS, HTTP-only cookies, and hashed credentials to protect your information. While we strive to protect your data, no method of transmission over the internet is 100% secure.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">6. MT5 Credentials</h4><p>Your MT5 login credentials assigned by our administrators are stored in our system to allow you to view them in your dashboard. You are responsible for keeping these credentials confidential. We recommend not sharing your MT5 password with anyone.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">7. Cookies</h4><p>We use secure, HTTP-only cookies to maintain your authenticated session. These cookies are essential for the platform to function and are not used for advertising or tracking purposes. Cookies expire after 30 days of inactivity.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">8. Third-Party Services</h4><p>We use Cloudinary for secure image storage (profile photos and payment proofs). Files uploaded to our platform are stored on Cloudinary's encrypted servers. We do not sell or share your data with any third party for marketing purposes.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">9. Your Rights</h4><p>You have the right to access, correct, or delete your personal data at any time. You may request account deletion by contacting our support team. Upon deletion, your data will be permanently removed from our systems within 30 days.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">10. Changes to This Policy</h4><p>We may update this Privacy Policy from time to time. We will notify you of any significant changes via the platform. Your continued use of the platform after changes constitutes acceptance of the updated policy.</p></div>
+            <div class="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20"><p class="text-emerald-400 text-xs">Your privacy matters to us. We never sell your data and never will. TheBrave Finance is built on trust.</p></div>
+          `,
+        },
+      };
+
+      function openSheet(type) {
+        const data = CONTENT[type];
+        if (!data) return;
+        document.getElementById("sheetTitle").textContent = data.title;
+        document.getElementById("sheetContent").innerHTML = data.html;
+        document.getElementById("bottomSheet").classList.add("open");
+        document.getElementById("sheetOverlay").classList.add("open");
+        document.body.style.overflow = "hidden";
+        // re-init lucide icons inside sheet content
+        if (typeof lucide !== "undefined") lucide.createIcons();
+      }
+
+      function closeSheet() {
+        document.getElementById("bottomSheet").classList.remove("open");
+        document.getElementById("sheetOverlay").classList.remove("open");
+        document.body.style.overflow = "";
+      }
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeSheet();
+      });
+
+      // ensure lucide icons render after any dynamic updates
+      document.addEventListener("DOMContentLoaded", () => {
+        if (typeof lucide !== "undefined") lucide.createIcons();
+      });
+    </script>
+    <script src="js/menu.js"></script>
+    <script>
+      // final lucide call
+      lucide.createIcons();
+    </script>
+  </body>
+</html>

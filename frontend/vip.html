@@ -1,0 +1,1153 @@
+<!doctype html>
+<html class="dark" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+      name="viewport"
+    />
+    <title>VIP Signals | TheBrave Finance</title>
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="images/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="images/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="images/favicon-16x16.png"
+    />
+    <link rel="manifest" href="images/site.webmanifest" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#1152d4",
+              "emerald-accent": "#10b981",
+              "background-light": "#f6f6f8",
+              "background-dark": "#101622",
+              "surface-dark": "#192233",
+              "border-dark": "#324467",
+            },
+            fontFamily: {
+              display: ["Manrope", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      body {
+        font-family: "Manrope", sans-serif;
+      }
+
+      .glass-panel {
+        background: rgba(25, 34, 51, 0.7);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(50, 68, 103, 0.5);
+      }
+
+      .text-gradient {
+        background: linear-gradient(
+          90deg,
+          #ffffff 0%,
+          #b7c8ff 45%,
+          #10b981 100%
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .hero-glow::before {
+        content: "";
+        position: absolute;
+        inset: auto;
+        width: 520px;
+        height: 520px;
+        left: 50%;
+        top: -120px;
+        transform: translateX(-50%);
+        background: radial-gradient(
+          circle,
+          rgba(17, 82, 212, 0.24),
+          transparent 65%
+        );
+        pointer-events: none;
+        filter: blur(10px);
+      }
+
+      .hero-glow::after {
+        content: "";
+        position: absolute;
+        width: 340px;
+        height: 340px;
+        right: -60px;
+        bottom: -80px;
+        background: radial-gradient(
+          circle,
+          rgba(16, 185, 129, 0.12),
+          transparent 70%
+        );
+        pointer-events: none;
+        filter: blur(8px);
+      }
+
+      #mobileNav {
+        transition:
+          transform 0.3s ease,
+          opacity 0.3s ease,
+          visibility 0.3s ease;
+      }
+
+      .faq-content {
+        display: grid;
+        grid-template-rows: 0fr;
+        transition: grid-template-rows 0.3s ease;
+      }
+
+      details[open] .faq-content {
+        grid-template-rows: 1fr;
+      }
+
+      .faq-content > div {
+        overflow: hidden;
+      }
+
+      /* Sheet styles (identical to login page) */
+      .sheet-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(4px);
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition:
+          opacity 0.35s ease,
+          visibility 0.35s ease;
+      }
+      .sheet-overlay.open {
+        opacity: 1;
+        visibility: visible;
+      }
+      .sheet {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1001;
+        background: #0f1825;
+        border-top: 1px solid #243049;
+        border-radius: 1.5rem 1.5rem 0 0;
+        max-height: 85vh;
+        overflow-y: auto;
+        transform: translateY(100%);
+        transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+      }
+      .sheet.open {
+        transform: translateY(0);
+      }
+      .sheet::-webkit-scrollbar {
+        width: 4px;
+      }
+      .sheet::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .sheet::-webkit-scrollbar-thumb {
+        background: #243049;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+
+  <body
+    class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display transition-colors duration-300"
+  >
+    <!-- Header -->
+    <header
+      class="sticky top-0 z-50 w-full border-b border-border-dark bg-background-dark/80 backdrop-blur-md"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="h-16 flex items-center justify-between">
+          <a href="index.html" class="flex items-center gap-3 min-w-0">
+            <img
+              src="images/TBF-LOGO.png"
+              alt="TheBrave Finance Logo"
+              class="w-9 h-9 object-contain flex-shrink-0"
+            />
+            <h2
+              class="text-white text-lg sm:text-xl font-extrabold tracking-tight whitespace-nowrap"
+            >
+              THEBRAVE <span class="text-primary">FINANCE</span>
+            </h2>
+          </a>
+
+          <nav class="hidden md:flex items-center gap-8">
+            <a
+              href="index.html"
+              class="text-sm font-medium text-slate-300 hover:text-white transition-colors"
+              >Home</a
+            >
+            <a
+              href="aboutus.html"
+              class="text-sm font-medium text-slate-300 hover:text-white transition-colors"
+              >About</a
+            >
+            <a
+              href="services.html"
+              class="text-sm font-medium text-slate-300 hover:text-white transition-colors"
+              >Services</a
+            >
+            <a href="vip.html" class="text-sm font-semibold text-white"
+              >VIP Signals</a
+            >
+            <a
+              href="recovery.html"
+              class="text-sm font-medium text-slate-300 hover:text-white transition-colors"
+              >Recovery</a
+            >
+            <a
+              href="contactus.html"
+              class="text-sm font-medium text-slate-300 hover:text-white transition-colors"
+              >Contact</a
+            >
+          </nav>
+
+          <div class="flex items-center gap-3">
+            <a
+              href="login.html"
+              class="hidden sm:inline-flex px-4 py-2 text-sm font-bold text-white bg-surface-dark border border-border-dark rounded-lg hover:bg-white/5 transition-all"
+            >
+              Login
+            </a>
+            <a
+              href="#pricing"
+              class="hidden sm:inline-flex px-5 py-2 text-sm font-bold text-white bg-primary hover:bg-blue-700 rounded-lg shadow-lg shadow-primary/20 transition-all"
+            >
+              Join VIP
+            </a>
+
+            <button
+              id="menuToggle"
+              class="md:hidden p-2 text-slate-300 hover:text-white"
+              aria-label="Open menu"
+            >
+              <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- mobile menu drawer (hidden by default) -->
+      <div
+        id="mobileNav"
+        class="absolute inset-x-0 top-16 bg-surface-dark border-b border-border-dark shadow-xl md:hidden invisible opacity-0 -translate-y-full transition-all duration-300 ease-in-out"
+      >
+        <nav class="flex flex-col px-6 py-6 space-y-4 text-base">
+          <a
+            class="text-slate-200 hover:text-white py-2 font-medium border-b border-border-dark/40"
+            href="index.html"
+            >Home</a
+          >
+          <a
+            class="text-slate-200 hover:text-white py-2 font-medium border-b border-border-dark/40"
+            href="aboutus.html"
+            >About</a
+          >
+          <a
+            class="text-slate-200 hover:text-white py-2 font-medium border-b border-border-dark/40"
+            href="services.html"
+            >Services</a
+          >
+          <a
+            class="text-slate-200 hover:text-white py-2 font-medium border-b border-border-dark/40"
+            href="vip.html"
+            >VIP Signals</a
+          >
+          <a
+            class="text-slate-200 hover:text-white py-2 font-medium border-b border-border-dark/40"
+            href="recovery.html"
+            >Recovery</a
+          >
+          <a
+            class="text-slate-200 hover:text-white py-2 font-medium border-b border-border-dark/40"
+            href="contactus.html"
+            >Contact</a
+          >
+          <div class="flex flex-col sm:hidden pt-4 gap-3">
+            <a
+              href="login.html"
+              class="w-full text-center px-4 py-3 text-sm font-bold text-white bg-surface-dark border border-border-dark rounded-lg"
+              >Login</a
+            >
+            <a
+              href="register.html"
+              class="w-full text-center px-5 py-3 text-sm font-bold text-white bg-primary rounded-lg shadow-lg shadow-primary/20"
+              >Register</a
+            >
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero -->
+      <section class="relative overflow-hidden hero-glow">
+        <div
+          class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 lg:pt-24 lg:pb-24 relative"
+        >
+          <div class="grid lg:grid-cols-12 gap-10 items-center">
+            <div class="lg:col-span-7">
+              <div
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-emerald-accent/20 bg-emerald-accent/10 text-emerald-accent text-[11px] sm:text-xs font-bold uppercase tracking-[0.2em] mb-6"
+              >
+                <span class="w-2 h-2 rounded-full bg-emerald-accent"></span>
+                Private signal group access
+              </div>
+
+              <h1
+                class="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight tracking-tight text-white"
+              >
+                Get direct access to our
+                <span class="text-gradient">VIP trading signals group</span>
+              </h1>
+
+              <p
+                class="mt-6 max-w-2xl text-sm sm:text-base lg:text-lg text-slate-400 leading-relaxed"
+              >
+                Join TheBrave Finance VIP and receive trading signals posted in
+                a private group with clear entries, stop loss levels, and take
+                profit targets. Designed for traders who want timely setups,
+                structured risk, and a cleaner decision process.
+              </p>
+
+              <div class="mt-8 flex flex-col sm:flex-row gap-4">
+                <a
+                  href="#pricing"
+                  class="inline-flex items-center justify-center gap-2 px-7 py-4 bg-emerald-accent hover:bg-emerald-600 text-white font-bold rounded-xl transition-all shadow-emerald"
+                >
+                  Join VIP Now
+                  <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                </a>
+
+                <a
+                  href="#how-it-works"
+                  class="inline-flex items-center justify-center gap-2 px-7 py-4 bg-surface-dark border border-border-dark hover:border-primary text-white font-bold rounded-xl transition-all"
+                >
+                  How it works
+                  <i data-lucide="chevron-down" class="w-5 h-5"></i>
+                </a>
+              </div>
+
+              <div class="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="glass-panel rounded-2xl p-4">
+                  <p
+                    class="text-xs uppercase tracking-widest text-slate-500 font-bold"
+                  >
+                    Access fee
+                  </p>
+                  <p class="mt-2 text-2xl font-black text-white">$56.78</p>
+                  <p class="text-xs text-slate-400 mt-1">every 5 days</p>
+                </div>
+
+                <div class="glass-panel rounded-2xl p-4">
+                  <p
+                    class="text-xs uppercase tracking-widest text-slate-500 font-bold"
+                  >
+                    Delivery
+                  </p>
+                  <p class="mt-2 text-lg font-bold text-white">Private group</p>
+                  <p class="text-xs text-slate-400 mt-1">
+                    signals shared directly inside the VIP channel
+                  </p>
+                </div>
+
+                <div class="glass-panel rounded-2xl p-4">
+                  <p
+                    class="text-xs uppercase tracking-widest text-slate-500 font-bold"
+                  >
+                    Includes
+                  </p>
+                  <p class="mt-2 text-lg font-bold text-white">
+                    Trade setup details
+                  </p>
+                  <p class="text-xs text-slate-400 mt-1">
+                    entry, stop loss and target guidance
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="lg:col-span-5">
+              <div
+                class="rounded-3xl border border-primary/20 bg-surface-dark shadow-glow p-6 sm:p-8"
+              >
+                <div class="flex items-center justify-between gap-3 mb-6">
+                  <div>
+                    <p class="text-sm font-bold text-white">
+                      VIP Signals Access
+                    </p>
+                    <p class="text-xs text-slate-400 mt-1">
+                      Recurring access plan
+                    </p>
+                  </div>
+                  <span
+                    class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest bg-primary/15 text-primary border border-primary/20"
+                  >
+                    Active plan
+                  </span>
+                </div>
+
+                <div
+                  class="rounded-2xl bg-background-dark border border-border-dark p-5"
+                >
+                  <div class="flex items-end gap-2">
+                    <span class="text-4xl sm:text-5xl font-black text-white"
+                      >$56.78</span
+                    >
+                    <span class="text-slate-500 pb-1 text-sm">/ 5 days</span>
+                  </div>
+
+                  <p class="mt-3 text-sm text-slate-400 leading-relaxed">
+                    Subscribe to maintain access to the VIP signal group where
+                    premium trade setups are posted.
+                  </p>
+
+                  <ul class="mt-6 space-y-3">
+                    <li class="flex items-start gap-3 text-sm text-slate-300">
+                      <i
+                        data-lucide="check-circle-2"
+                        class="w-5 h-5 text-emerald-accent mt-0.5"
+                      ></i>
+                      <span>Private group access</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-sm text-slate-300">
+                      <i
+                        data-lucide="check-circle-2"
+                        class="w-5 h-5 text-emerald-accent mt-0.5"
+                      ></i>
+                      <span
+                        >Signals with entry, stop loss and target levels</span
+                      >
+                    </li>
+                    <li class="flex items-start gap-3 text-sm text-slate-300">
+                      <i
+                        data-lucide="check-circle-2"
+                        class="w-5 h-5 text-emerald-accent mt-0.5"
+                      ></i>
+                      <span>Consistent access renewal every 5 days</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-sm text-slate-300">
+                      <i
+                        data-lucide="check-circle-2"
+                        class="w-5 h-5 text-emerald-accent mt-0.5"
+                      ></i>
+                      <span
+                        >Built for forex, gold and selected market
+                        opportunities</span
+                      >
+                    </li>
+                  </ul>
+
+                  <a
+                    href="register.html"
+                    class="mt-7 w-full inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-emerald-accent hover:bg-emerald-600 text-white font-black transition-all shadow-emerald"
+                  >
+                    Subscribe for $56.78
+                    <i data-lucide="zap" class="w-5 h-5"></i>
+                  </a>
+
+                  <p class="mt-4 text-[11px] text-slate-500 leading-relaxed">
+                    Access renews every 5 days. Make sure your membership stays
+                    active to remain inside the VIP group.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Value Props -->
+      <section
+        id="how-it-works"
+        class="py-16 border-y border-border-dark bg-surface-dark/30"
+      >
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="max-w-2xl mb-12">
+            <p
+              class="text-primary text-sm font-bold uppercase tracking-widest mb-3"
+            >
+              How VIP works
+            </p>
+            <h2
+              class="text-3xl sm:text-4xl font-black text-white leading-tight"
+            >
+              Everything is built around simple, actionable signal delivery
+            </h2>
+            <p class="mt-4 text-slate-400 text-sm sm:text-base leading-relaxed">
+              The goal is clarity. Once you join the VIP plan, you gain access
+              to the private group where signals are posted for members.
+            </p>
+          </div>
+
+          <div class="grid md:grid-cols-3 gap-6">
+            <div
+              class="rounded-2xl border border-border-dark bg-surface-dark p-6"
+            >
+              <div
+                class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-5"
+              >
+                <i data-lucide="users" class="w-6 h-6 text-primary"></i>
+              </div>
+              <h3 class="text-white text-lg font-bold">
+                Join the private group
+              </h3>
+              <p class="mt-3 text-sm text-slate-400 leading-relaxed">
+                Your VIP subscription gives you access to the members-only
+                signal group managed by TheBrave Finance.
+              </p>
+            </div>
+
+            <div
+              class="rounded-2xl border border-border-dark bg-surface-dark p-6"
+            >
+              <div
+                class="w-12 h-12 rounded-xl bg-emerald-accent/10 flex items-center justify-center mb-5"
+              >
+                <i data-lucide="radio" class="w-6 h-6 text-emerald-accent"></i>
+              </div>
+              <h3 class="text-white text-lg font-bold">
+                Receive posted setups
+              </h3>
+              <p class="mt-3 text-sm text-slate-400 leading-relaxed">
+                Signals are dropped directly in the group, so members can review
+                and act on setups as they are shared.
+              </p>
+            </div>
+
+            <div
+              class="rounded-2xl border border-border-dark bg-surface-dark p-6"
+            >
+              <div
+                class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-5"
+              >
+                <i data-lucide="shield-check" class="w-6 h-6 text-primary"></i>
+              </div>
+              <h3 class="text-white text-lg font-bold">Trade with structure</h3>
+              <p class="mt-3 text-sm text-slate-400 leading-relaxed">
+                Signals are intended to help members approach trades with more
+                structure, defined levels, and better discipline.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Benefits -->
+      <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center max-w-2xl mx-auto mb-14">
+            <p
+              class="text-primary text-sm font-bold uppercase tracking-widest mb-3"
+            >
+              What you get
+            </p>
+            <h2 class="text-3xl sm:text-4xl font-black text-white">
+              A cleaner VIP offer that is easy to understand
+            </h2>
+          </div>
+
+          <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div
+              class="rounded-2xl bg-surface-dark border border-border-dark p-6"
+            >
+              <i data-lucide="target" class="w-8 h-8 text-primary mb-4"></i>
+              <h4 class="text-white font-bold text-lg">
+                Clear trade direction
+              </h4>
+              <p class="mt-3 text-sm text-slate-400 leading-relaxed">
+                Each setup is designed to tell members what to watch and where
+                the opportunity is.
+              </p>
+            </div>
+
+            <div
+              class="rounded-2xl bg-surface-dark border border-border-dark p-6"
+            >
+              <i
+                data-lucide="trending-up"
+                class="w-8 h-8 text-emerald-accent mb-4"
+              ></i>
+              <h4 class="text-white font-bold text-lg">Fast signal delivery</h4>
+              <p class="mt-3 text-sm text-slate-400 leading-relaxed">
+                Signals are dropped directly in the private group so members can
+                see them without delay.
+              </p>
+            </div>
+
+            <div
+              class="rounded-2xl bg-surface-dark border border-border-dark p-6"
+            >
+              <i
+                data-lucide="list-checks"
+                class="w-8 h-8 text-primary mb-4"
+              ></i>
+              <h4 class="text-white font-bold text-lg">Structured setups</h4>
+              <p class="mt-3 text-sm text-slate-400 leading-relaxed">
+                Trade ideas are intended to come with useful execution
+                structure, not random market calls.
+              </p>
+            </div>
+
+            <div
+              class="rounded-2xl bg-surface-dark border border-border-dark p-6"
+            >
+              <i
+                data-lucide="badge-dollar-sign"
+                class="w-8 h-8 text-emerald-accent mb-4"
+              ></i>
+              <h4 class="text-white font-bold text-lg">Simple pricing</h4>
+              <p class="mt-3 text-sm text-slate-400 leading-relaxed">
+                One clear subscription fee of
+                <span class="text-white font-semibold">$56.78</span>
+                every 5 days for continued access.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Pricing -->
+      <section id="pricing" class="py-20 bg-background-dark/60">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-12">
+            <p
+              class="text-primary text-sm font-bold uppercase tracking-widest mb-3"
+            >
+              VIP membership
+            </p>
+            <h2 class="text-3xl sm:text-4xl font-black text-white">
+              One plan. One signal group. One clear price.
+            </h2>
+            <p class="mt-4 text-slate-400 text-sm sm:text-base">
+              No confusing pricing tiers. Just direct access to the VIP signal
+              group.
+            </p>
+          </div>
+
+          <div
+            class="rounded-3xl border border-emerald-accent/20 bg-surface-dark shadow-emerald overflow-hidden"
+          >
+            <div class="grid lg:grid-cols-5">
+              <div
+                class="lg:col-span-3 p-8 sm:p-10 border-b lg:border-b-0 lg:border-r border-border-dark"
+              >
+                <div
+                  class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-accent/10 text-emerald-accent border border-emerald-accent/20 text-[10px] font-black uppercase tracking-widest"
+                >
+                  VIP access plan
+                </div>
+
+                <h3 class="mt-6 text-3xl sm:text-4xl font-black text-white">
+                  $56.78
+                  <span class="text-lg sm:text-xl text-slate-500 font-bold"
+                    >every 5 days</span
+                  >
+                </h3>
+
+                <p
+                  class="mt-5 text-slate-400 text-sm sm:text-base leading-relaxed max-w-xl"
+                >
+                  This subscription is for traders who want access to the
+                  private signal group where premium setups are posted. Your
+                  membership must remain active to continue receiving access.
+                </p>
+
+                <div class="mt-8 grid sm:grid-cols-2 gap-4">
+                  <div
+                    class="rounded-2xl bg-background-dark border border-border-dark p-4"
+                  >
+                    <p
+                      class="text-xs uppercase tracking-widest text-slate-500 font-bold"
+                    >
+                      Access type
+                    </p>
+                    <p class="mt-2 text-white font-bold">
+                      Private signal group
+                    </p>
+                  </div>
+
+                  <div
+                    class="rounded-2xl bg-background-dark border border-border-dark p-4"
+                  >
+                    <p
+                      class="text-xs uppercase tracking-widest text-slate-500 font-bold"
+                    >
+                      Renewal cycle
+                    </p>
+                    <p class="mt-2 text-white font-bold">Every 5 days</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="lg:col-span-2 p-8 sm:p-10 bg-background-dark/40">
+                <h4 class="text-white font-bold text-lg mb-5">
+                  Included in access
+                </h4>
+
+                <ul class="space-y-4">
+                  <li class="flex gap-3 text-sm text-slate-300">
+                    <i
+                      data-lucide="check"
+                      class="w-5 h-5 text-emerald-accent mt-0.5"
+                    ></i>
+                    <span>VIP group entry</span>
+                  </li>
+                  <li class="flex gap-3 text-sm text-slate-300">
+                    <i
+                      data-lucide="check"
+                      class="w-5 h-5 text-emerald-accent mt-0.5"
+                    ></i>
+                    <span>Signals shared inside the group</span>
+                  </li>
+                  <li class="flex gap-3 text-sm text-slate-300">
+                    <i
+                      data-lucide="check"
+                      class="w-5 h-5 text-emerald-accent mt-0.5"
+                    ></i>
+                    <span>Trade setup structure</span>
+                  </li>
+                  <li class="flex gap-3 text-sm text-slate-300">
+                    <i
+                      data-lucide="check"
+                      class="w-5 h-5 text-emerald-accent mt-0.5"
+                    ></i>
+                    <span>Ongoing access while subscription is active</span>
+                  </li>
+                </ul>
+
+                <a
+                  href="register.html"
+                  class="mt-8 w-full inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-primary hover:bg-blue-700 text-white font-black transition-all shadow-lg shadow-primary/20"
+                >
+                  Get VIP Access
+                  <i data-lucide="arrow-up-right" class="w-5 h-5"></i>
+                </a>
+
+                <p class="mt-4 text-[11px] text-slate-500">
+                  Billing amount:
+                  <span class="text-slate-400">$56.78</span> every 5 days.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section class="py-20">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-12">
+            <p
+              class="text-primary text-sm font-bold uppercase tracking-widest mb-3"
+            >
+              FAQ
+            </p>
+            <h2 class="text-3xl sm:text-4xl font-black text-white">
+              Common questions
+            </h2>
+          </div>
+
+          <div class="space-y-4">
+            <details
+              class="group rounded-2xl bg-surface-dark border border-border-dark p-6"
+              open
+            >
+              <summary
+                class="list-none cursor-pointer flex items-center justify-between gap-4"
+              >
+                <span class="text-white font-bold"
+                  >What is the VIP subscription for?</span
+                >
+                <i
+                  data-lucide="chevron-down"
+                  class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform"
+                ></i>
+              </summary>
+              <div class="faq-content">
+                <div>
+                  <p class="pt-4 text-sm text-slate-400 leading-relaxed">
+                    The VIP subscription is for access to the private signal
+                    group where trade signals are posted for members.
+                  </p>
+                </div>
+              </div>
+            </details>
+
+            <details
+              class="group rounded-2xl bg-surface-dark border border-border-dark p-6"
+            >
+              <summary
+                class="list-none cursor-pointer flex items-center justify-between gap-4"
+              >
+                <span class="text-white font-bold">How much does it cost?</span>
+                <i
+                  data-lucide="chevron-down"
+                  class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform"
+                ></i>
+              </summary>
+              <div class="faq-content">
+                <div>
+                  <p class="pt-4 text-sm text-slate-400 leading-relaxed">
+                    The VIP access fee is
+                    <span class="text-white font-semibold">$56.78</span>
+                    every 5 days.
+                  </p>
+                </div>
+              </div>
+            </details>
+
+            <details
+              class="group rounded-2xl bg-surface-dark border border-border-dark p-6"
+            >
+              <summary
+                class="list-none cursor-pointer flex items-center justify-between gap-4"
+              >
+                <span class="text-white font-bold"
+                  >What happens when my plan expires?</span
+                >
+                <i
+                  data-lucide="chevron-down"
+                  class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform"
+                ></i>
+              </summary>
+              <div class="faq-content">
+                <div>
+                  <p class="pt-4 text-sm text-slate-400 leading-relaxed">
+                    Your access is tied to your active VIP subscription. To
+                    remain in the signal group, your plan needs to stay current.
+                  </p>
+                </div>
+              </div>
+            </details>
+
+            <details
+              class="group rounded-2xl bg-surface-dark border border-border-dark p-6"
+            >
+              <summary
+                class="list-none cursor-pointer flex items-center justify-between gap-4"
+              >
+                <span class="text-white font-bold"
+                  >How do I join after payment?</span
+                >
+                <i
+                  data-lucide="chevron-down"
+                  class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform"
+                ></i>
+              </summary>
+              <div class="faq-content">
+                <div>
+                  <p class="pt-4 text-sm text-slate-400 leading-relaxed">
+                    After subscribing, you can direct members to the next step
+                    in your flow, such as account approval, onboarding, or
+                    receiving the private group access link.
+                  </p>
+                </div>
+              </div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="pb-24">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div
+            class="relative overflow-hidden rounded-3xl border border-primary/20 bg-surface-dark px-6 py-12 sm:px-10 sm:py-14 text-center"
+          >
+            <div
+              class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(17,82,212,0.18),transparent_55%)]"
+            ></div>
+            <div class="relative z-10">
+              <h2
+                class="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight"
+              >
+                Ready to join the VIP signals group?
+              </h2>
+              <p
+                class="mt-4 max-w-2xl mx-auto text-sm sm:text-base text-slate-400 leading-relaxed"
+              >
+                Subscribe for
+                <span class="text-white font-semibold"
+                  >$56.78 every 5 days</span
+                >
+                and maintain access to the private signal group.
+              </p>
+
+              <div class="mt-8 flex flex-col sm:flex-row justify-center gap-4">
+                <a
+                  href="register.html"
+                  class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-emerald-accent hover:bg-emerald-600 text-white font-black transition-all shadow-emerald"
+                >
+                  Get Instant VIP Access
+                  <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                </a>
+
+                <a
+                  href="contactus.html"
+                  class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl border border-border-dark bg-background-dark hover:border-primary text-white font-bold transition-all"
+                >
+                  Contact Support
+                  <i data-lucide="message-square" class="w-5 h-5"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer with sheet triggers -->
+    <footer class="border-t border-border-dark bg-background-dark pt-16 pb-8">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div
+          class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-10 mb-14"
+        >
+          <div class="col-span-2">
+            <div class="flex items-center gap-3 mb-5">
+              <img
+                src="images/TBF-LOGO.png"
+                alt="TheBrave Finance Logo"
+                class="w-9 h-9 object-contain"
+              />
+              <h2 class="text-white text-xl font-extrabold tracking-tight">
+                THEBRAVE FINANCE
+              </h2>
+            </div>
+            <p class="text-slate-500 text-sm max-w-sm leading-relaxed">
+              Premium trading solutions, structured financial services, and a
+              better client experience built around clarity and trust.
+            </p>
+          </div>
+
+          <div>
+            <h6 class="text-white font-bold mb-5">Company</h6>
+            <ul class="space-y-3 text-sm text-slate-500">
+              <li>
+                <a
+                  href="aboutus.html"
+                  class="hover:text-primary transition-colors"
+                  >About Us</a
+                >
+              </li>
+              <li>
+                <button
+                  onclick="openSheet('privacy')"
+                  class="hover:text-primary transition-colors text-left"
+                >
+                  Privacy Policy
+                </button>
+              </li>
+              <li>
+                <button
+                  onclick="openSheet('terms')"
+                  class="hover:text-primary transition-colors text-left"
+                >
+                  Terms of Service
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h6 class="text-white font-bold mb-5">Services</h6>
+            <ul class="space-y-3 text-sm text-slate-500">
+              <li>
+                <a
+                  href="services.html"
+                  class="hover:text-primary transition-colors"
+                  >Services</a
+                >
+              </li>
+              <li>
+                <a href="vip.html" class="hover:text-primary transition-colors"
+                  >VIP Signals</a
+                >
+              </li>
+              <li>
+                <a
+                  href="recovery.html"
+                  class="hover:text-primary transition-colors"
+                  >Recovery</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h6 class="text-white font-bold mb-5">Support</h6>
+            <ul class="space-y-3 text-sm text-slate-500">
+              <li>
+                <a
+                  href="contactus.html"
+                  class="hover:text-primary transition-colors"
+                  >Contact Support</a
+                >
+              </li>
+              <li>
+                <a
+                  href="login.html"
+                  class="hover:text-primary transition-colors"
+                  >Client Login</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="pt-8 border-t border-border-dark text-center">
+          <p class="text-slate-500 text-sm">
+            © 2000 TheBrave Finance Integrated Services. All rights reserved.
+            &nbsp;·&nbsp;
+            <button
+              onclick="openSheet('privacy')"
+              class="hover:text-primary transition-colors"
+            >
+              Privacy Policy
+            </button>
+            &nbsp;·&nbsp;
+            <button
+              onclick="openSheet('terms')"
+              class="hover:text-primary transition-colors"
+            >
+              Terms of Service
+            </button>
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Sheet Overlay -->
+    <div id="sheetOverlay" class="sheet-overlay" onclick="closeSheet()"></div>
+
+    <!-- Bottom Sheet -->
+    <div id="bottomSheet" class="sheet">
+      <div
+        class="sticky top-0 bg-[#0f1825] px-6 pt-5 pb-4 border-b border-[#1e293b] flex items-center justify-between"
+      >
+        <div class="flex items-center gap-3">
+          <div
+            class="h-9 w-9 rounded-xl bg-primary/20 flex items-center justify-center"
+          >
+            <i data-lucide="file-text" class="w-4 h-4 text-primary"></i>
+          </div>
+          <h3 id="sheetTitle" class="text-white font-extrabold text-base"></h3>
+        </div>
+        <button
+          onclick="closeSheet()"
+          class="text-slate-400 hover:text-white p-1.5 rounded-lg hover:bg-white/5 transition-all"
+        >
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div class="flex justify-center pt-2 pb-1">
+        <div class="w-10 h-1 bg-[#243049] rounded-full"></div>
+      </div>
+      <div
+        id="sheetContent"
+        class="px-6 pb-10 pt-2 text-slate-300 text-sm leading-relaxed space-y-6"
+      ></div>
+    </div>
+
+    <script src="js/menu.js"></script>
+    <script>
+      // Complete terms and privacy content (identical to login page)
+      const CONTENT = {
+        terms: {
+          title: "Terms of Service",
+          html: `
+            <p class="text-slate-400 text-xs">Last updated: January 1, 2026</p>
+            <div class="space-y-2"><h4 class="text-white font-bold">1. Acceptance of Terms</h4><p>By accessing or using TheBrave Finance ("the Platform"), you agree to be bound by these Terms of Service. If you do not agree to any part of these terms, you may not access or use our services.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">2. Description of Services</h4><p>TheBrave Finance provides financial trading tools, market analysis, VIP signal subscriptions, and account management features. Our platform is designed to assist traders in making informed decisions. We do not provide regulated financial advice.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">3. Eligibility</h4><p>You must be at least 18 years of age to use our services. By registering, you represent and warrant that you are legally permitted to engage in trading activities in your jurisdiction. TheBrave Finance reserves the right to refuse service to anyone at any time.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">4. Account Responsibility</h4><p>You are solely responsible for maintaining the confidentiality of your account credentials, including your MT5 login ID and password. Any activity that occurs under your account is your responsibility. Notify us immediately if you suspect unauthorized access.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">5. Deposits & Payments</h4><p>All deposits are processed in cryptocurrency. Once submitted, deposits cannot be reversed except at the sole discretion of TheBrave Finance. Proof of payment must be accurate and valid. Fraudulent submissions will result in immediate account termination.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">6. VIP Signals</h4><p>VIP signals are provided for informational purposes only. Past performance of any signal does not guarantee future results. All trading involves risk and you may lose some or all of your invested capital. TheBrave Finance is not liable for any trading losses incurred using our signals.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">7. Prohibited Activities</h4><p>You agree not to: use the platform for any unlawful purpose; attempt to gain unauthorized access to any part of the platform; reverse engineer or exploit the platform; or use automated systems to access our services without prior written consent.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">8. Termination</h4><p>We reserve the right to suspend or terminate your account at any time, with or without notice, for conduct that we believe violates these Terms or is harmful to other users, us, or third parties.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">9. Limitation of Liability</h4><p>TheBrave Finance shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of or inability to use the platform, even if we have been advised of the possibility of such damages.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">10. Changes to Terms</h4><p>We reserve the right to modify these Terms at any time. Continued use of the platform after any changes constitutes your acceptance of the new terms. We encourage you to review these Terms periodically.</p></div>
+            <div class="p-4 rounded-xl bg-primary/10 border border-primary/20"><p class="text-blue-400 text-xs">If you have questions about these Terms, please contact our support team through the platform.</p></div>
+          `,
+        },
+        privacy: {
+          title: "Privacy Policy",
+          html: `
+            <p class="text-slate-400 text-xs">Last updated: January 1, 2026</p>
+            <div class="space-y-2"><h4 class="text-white font-bold">1. Introduction</h4><p>TheBrave Finance ("we", "our", "us") is committed to protecting your personal information. This Privacy Policy explains how we collect, use, store, and protect your data when you use our platform.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">2. Information We Collect</h4><p>We collect information you provide directly, including your name, email address, phone number, and profile photo (via Google OAuth). We also collect transactional data such as deposit records, payment proofs, and account activity on our platform.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">3. How We Use Your Information</h4><p>Your information is used to: create and manage your account; process and verify deposits; assign and manage your MT5 trading accounts; deliver VIP signals and subscription services; communicate important account updates; and improve our platform and services.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">4. Google OAuth</h4><p>We use Google's OAuth 2.0 for authentication. When you sign in with Google, we receive your name, email address, and profile photo. We do not have access to your Google password or any other Google account data beyond what is required for authentication.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">5. Data Storage & Security</h4><p>Your data is stored securely on encrypted servers. We use industry-standard security measures including HTTPS, HTTP-only cookies, and hashed credentials to protect your information. While we strive to protect your data, no method of transmission over the internet is 100% secure.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">6. MT5 Credentials</h4><p>Your MT5 login credentials assigned by our administrators are stored in our system to allow you to view them in your dashboard. You are responsible for keeping these credentials confidential. We recommend not sharing your MT5 password with anyone.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">7. Cookies</h4><p>We use secure, HTTP-only cookies to maintain your authenticated session. These cookies are essential for the platform to function and are not used for advertising or tracking purposes. Cookies expire after 30 days of inactivity.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">8. Third-Party Services</h4><p>We use Cloudinary for secure image storage (profile photos and payment proofs). Files uploaded to our platform are stored on Cloudinary's encrypted servers. We do not sell or share your data with any third party for marketing purposes.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">9. Your Rights</h4><p>You have the right to access, correct, or delete your personal data at any time. You may request account deletion by contacting our support team. Upon deletion, your data will be permanently removed from our systems within 30 days.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">10. Changes to This Policy</h4><p>We may update this Privacy Policy from time to time. We will notify you of any significant changes via the platform. Your continued use of the platform after changes constitutes acceptance of the updated policy.</p></div>
+            <div class="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20"><p class="text-emerald-400 text-xs">Your privacy matters to us. We never sell your data and never will. TheBrave Finance is built on trust.</p></div>
+          `,
+        },
+      };
+
+      function openSheet(type) {
+        const data = CONTENT[type];
+        if (!data) return;
+        document.getElementById("sheetTitle").textContent = data.title;
+        document.getElementById("sheetContent").innerHTML = data.html;
+        document.getElementById("bottomSheet").classList.add("open");
+        document.getElementById("sheetOverlay").classList.add("open");
+        document.body.style.overflow = "hidden";
+        if (typeof lucide !== "undefined") lucide.createIcons();
+      }
+
+      function closeSheet() {
+        document.getElementById("bottomSheet").classList.remove("open");
+        document.getElementById("sheetOverlay").classList.remove("open");
+        document.body.style.overflow = "";
+      }
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeSheet();
+      });
+
+      // Initialize Lucide icons
+      if (typeof lucide !== "undefined") lucide.createIcons();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,785 @@
+<!doctype html>
+<html class="dark" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+      name="viewport"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="images/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="images/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="images/favicon-16x16.png"
+    />
+    <link rel="manifest" href="images/site.webmanifest" />
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#1152d4",
+              "emerald-accent": "#10b981",
+              "background-light": "#f6f6f8",
+              "background-dark": "#101622",
+              "surface-dark": "#192233",
+              "border-dark": "#324467",
+            },
+            fontFamily: {
+              display: ["Manrope", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Manrope", sans-serif;
+      }
+      .glass-panel {
+        background: rgba(25, 34, 51, 0.7);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(50, 68, 103, 0.5);
+      }
+      .lucide {
+        width: 1em;
+        height: 1em;
+        stroke-width: 1.5;
+        display: inline-block;
+        vertical-align: middle;
+        fill: none;
+      }
+      /* mobile menu styles */
+      .mobile-menu-open {
+        overflow: hidden;
+      }
+      #mobileNav {
+        transition:
+          transform 0.3s ease-in-out,
+          opacity 0.2s,
+          visibility 0.2s;
+      }
+      /* Sheet styles (identical to login page) */
+      .sheet-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(4px);
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition:
+          opacity 0.35s ease,
+          visibility 0.35s ease;
+      }
+      .sheet-overlay.open {
+        opacity: 1;
+        visibility: visible;
+      }
+      .sheet {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1001;
+        background: #0f1825;
+        border-top: 1px solid #243049;
+        border-radius: 1.5rem 1.5rem 0 0;
+        max-height: 85vh;
+        overflow-y: auto;
+        transform: translateY(100%);
+        transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+      }
+      .sheet.open {
+        transform: translateY(0);
+      }
+      .sheet::-webkit-scrollbar {
+        width: 4px;
+      }
+      .sheet::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .sheet::-webkit-scrollbar-thumb {
+        background: #243049;
+        border-radius: 10px;
+      }
+    </style>
+    <title>Services | THEBRAVE FINANCE</title>
+  </head>
+  <body
+    class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased min-h-screen flex flex-col"
+  >
+    <!-- Top Navigation Bar - Sticky Header with mobile menu -->
+    <header
+      class="sticky top-0 z-50 w-full border-b border-border-dark bg-background-dark/80 backdrop-blur-md"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <!-- logo -->
+          <div class="flex items-center gap-3">
+            <img
+              src="images/TBF-LOGO.png"
+              alt="The Brave Finance Logo"
+              class="w-8 h-8 object-contain"
+            />
+            <h2
+              class="text-white text-xl font-extrabold tracking-tight whitespace-nowrap"
+            >
+              THEBRAVE <span class="text-primary">FINANCE</span>
+            </h2>
+          </div>
+
+          <!-- desktop navigation (hidden on mobile) -->
+          <nav class="hidden md:flex items-center gap-8">
+            <a
+              class="text-slate-300 hover:text-white text-sm font-medium transition-colors"
+              href="index.html"
+              >Home</a
+            >
+            <a
+              class="text-slate-300 hover:text-white text-sm font-medium transition-colors"
+              href="aboutus.html"
+              >About</a
+            >
+            <a
+              class="text-slate-300 hover:text-white text-sm font-medium transition-colors"
+              href="services.html"
+              >Services</a
+            >
+            <a
+              class="text-slate-300 hover:text-white text-sm font-medium transition-colors"
+              href="vip.html"
+              >VIP Signals</a
+            >
+            <a
+              class="text-slate-300 hover:text-white text-sm font-medium transition-colors"
+              href="recovery.html"
+              >Recovery</a
+            >
+            <a
+              class="text-slate-300 hover:text-white text-sm font-medium transition-colors"
+              href="contactus.html"
+              >Contact</a
+            >
+          </nav>
+
+          <!-- right side: login/register + hamburger (mobile) -->
+          <div class="flex items-center gap-2 sm:gap-3">
+            <!-- desktop login/register (hidden on xs, visible sm) -->
+            <a
+              href="login.html"
+              class="hidden sm:flex px-4 py-2 text-sm font-bold text-white bg-surface-dark hover:bg-slate-700 rounded-lg transition-all items-center justify-center"
+              >Login</a
+            >
+            <a
+              href="register.html"
+              class="hidden sm:flex px-5 py-2 text-sm font-bold text-white bg-primary hover:bg-blue-700 rounded-lg transition-all shadow-lg shadow-primary/20 items-center justify-center"
+              >Register</a
+            >
+
+            <!-- mobile hamburger button -->
+            <button
+              id="menuToggle"
+              class="block md:hidden p-2 text-slate-300 hover:text-white focus:outline-none"
+              aria-label="menu"
+            >
+              <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- mobile menu drawer (hidden by default) -->
+      <div
+        id="mobileNav"
+        class="absolute inset-x-0 top-16 bg-surface-dark border-b border-border-dark shadow-xl md:hidden invisible opacity-0 -translate-y-full transition-all duration-300 ease-in-out z-50"
+      >
+        <nav class="flex flex-col px-6 py-6 space-y-4 text-base">
+          <a
+            class="text-slate-200 hover:text-white py-2 font-medium border-b border-border-dark/40"
+            href="index.html"
+            >Home</a
+          >
+          <a
+            class="text-slate-200 hover:text-white py-2 font-medium border-b border-border-dark/40"
+            href="aboutus.html"
+            >About</a
+          >
+          <a
+            class="text-slate-200 hover:text-white py-2 font-medium border-b border-border-dark/40"
+            href="services.html"
+            >Services</a
+          >
+          <a
+            class="text-slate-200 hover:text-white py-2 font-medium border-b border-border-dark/40"
+            href="vip.html"
+            >VIP Signals</a
+          >
+          <a
+            class="text-slate-200 hover:text-white py-2 font-medium border-b border-border-dark/40"
+            href="recovery.html"
+            >Recovery</a
+          >
+          <a
+            class="text-slate-200 hover:text-white py-2 font-medium border-b border-border-dark/40"
+            href="contactus.html"
+            >Contact</a
+          >
+          <div class="flex flex-col sm:hidden pt-4 gap-3">
+            <a
+              href="login.html"
+              class="w-full text-center px-4 py-3 text-sm font-bold text-white bg-surface-dark border border-border-dark rounded-lg"
+              >Login</a
+            >
+            <a
+              href="register.html"
+              class="w-full text-center px-5 py-3 text-sm font-bold text-white bg-primary rounded-lg shadow-lg shadow-primary/20"
+              >Register</a
+            >
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1">
+      <!-- Hero Section -->
+      <div class="px-6 md:px-20 lg:px-40 pt-16 pb-12">
+        <div class="max-w-[960px] mx-auto">
+          <div class="flex flex-wrap justify-between items-end gap-6 mb-12">
+            <div class="flex flex-col gap-4 max-w-2xl">
+              <span
+                class="text-primary font-bold tracking-widest text-xs uppercase"
+                >Premium Fintech Solutions</span
+              >
+              <h1
+                class="text-slate-900 dark:text-white text-4xl md:text-5xl font-black leading-tight tracking-[-0.033em]"
+              >
+                Our Integrated Services
+              </h1>
+              <p
+                class="text-slate-600 dark:text-slate-400 text-lg font-normal leading-relaxed"
+              >
+                We provide a comprehensive suite of institutional-grade
+                financial services designed to optimize your trading performance
+                and secure your digital assets.
+              </p>
+            </div>
+            <a
+              href="register.html"
+              class="flex min-w-[140px] cursor-pointer items-center justify-center rounded-xl h-12 px-6 bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-white text-sm font-bold transition-all hover:bg-slate-300 dark:hover:bg-slate-700"
+            >
+              <span class="truncate">Get Started</span>
+            </a>
+          </div>
+
+          <!-- Services Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Card 1: MT5 Account Access -->
+            <div
+              class="group flex flex-col bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden hover:border-primary/50 transition-all p-6"
+            >
+              <div
+                class="mb-6 overflow-hidden rounded-lg aspect-video bg-slate-100 dark:bg-slate-800 relative"
+              >
+                <div
+                  class="absolute inset-0 flex items-center justify-center text-primary/20"
+                >
+                  <span class="material-symbols-outlined text-6xl"
+                    >monitoring</span
+                  >
+                </div>
+                <div
+                  class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+                  style="
+                    background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuDkaxNkCyVCV_9q01fox2qiPNGEaG7OqWAwcQie5Rs5bRLsWzkHMkiSxhbby6IDTa6qWe0bwixFBj86UnutYu41qWzsn9E3oT5NCXtaAbmXUT78HSyBWIvzfGeGGT0jd7Vo7eCyxUHZa4wWlke_vse13MQU24VueKCCX6hlg8ELJzZ3OmZx9j6Fx6IUZxMaTc0quJao77F_-O_A_ocrwuB4Ly3HXMZ74SkvNk7JzDlSr19Ck5R5oc2X1yFtLLsv2alRd1FKbvfkvWU&quot;);
+                  "
+                ></div>
+              </div>
+              <div class="flex items-center gap-3 mb-3">
+                <span class="material-symbols-outlined text-primary"
+                  >terminal</span
+                >
+                <h3 class="text-slate-900 dark:text-white text-xl font-bold">
+                  MT5 Account Access
+                </h3>
+              </div>
+              <p
+                class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6"
+              >
+                High-performance trading infrastructure offering ultra-low
+                latency and direct market access for professional MetaTrader 5
+                users.
+              </p>
+            </div>
+
+            <!-- Card 2: Managed Trading Assistance -->
+            <div
+              class="group flex flex-col bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden hover:border-primary/50 transition-all p-6"
+            >
+              <div
+                class="mb-6 overflow-hidden rounded-lg aspect-video bg-slate-100 dark:bg-slate-800 relative"
+              >
+                <div
+                  class="absolute inset-0 flex items-center justify-center text-primary/20"
+                >
+                  <span class="material-symbols-outlined text-6xl"
+                    >query_stats</span
+                  >
+                </div>
+                <div
+                  class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+                  style="
+                    background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuATs02Mpl3NKNazvv9hG_CbZsR3DrRAv9TiK0X_OP391NgC2NDrfVIUotg02AxS7BoZ0h4B_GfH6Dl2ty1T8dFzWgeZR4fPwmMULU063XPRPIppSHDfDQMcc_r5xL8Biv5o25jmR7gRU5CL3Iktsf3JqSGZT-MmI6H-7SlX2fb1OlKBEeW8jtUGzRSWCeYAsTPuPNrNQ2vfSOhLnnFRmbmARe9u5bgQpNdl_UZbpNPtIaUgokZ_0Ym5qpwGLBDYb7EwtdVN55ADWW8&quot;);
+                  "
+                ></div>
+              </div>
+              <div class="flex items-center gap-3 mb-3">
+                <span class="material-symbols-outlined text-primary"
+                  >diversity_3</span
+                >
+                <h3 class="text-slate-900 dark:text-white text-xl font-bold">
+                  Managed Trading
+                </h3>
+              </div>
+              <p
+                class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6"
+              >
+                Expert-led portfolio management services designed to optimize
+                your investment returns while strictly adhering to your risk
+                tolerance.
+              </p>
+            </div>
+
+            <!-- Card 3: VIP Trading Signals -->
+            <div
+              class="group flex flex-col bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden hover:border-primary/50 transition-all p-6"
+            >
+              <div
+                class="mb-6 overflow-hidden rounded-lg aspect-video bg-slate-100 dark:bg-slate-800 relative"
+              >
+                <div
+                  class="absolute inset-0 flex items-center justify-center text-primary/20"
+                >
+                  <span class="material-symbols-outlined text-6xl"
+                    >campaign</span
+                  >
+                </div>
+                <div
+                  class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+                  style="
+                    background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuDDLOAtZ1395N9XyHMSKXRy2-MLRkWZLp4YS2bB-ZioWW41MLwTjufHupDfkFMzkWoQ4A-I-s-lMkvuauAek6xGzCrLHduJPUJVQmrY7U0c7A7k1TZYwY1zsPjeKRF2TTRDeCa3iGYtIt3W1DEEXrvxphcgMEgN-HBQx6EAPjVqQB_8zkpCk1BCnpu2XjLnLFnn4RAjZSxa9qaV48QeyO4HmxRifWGZX2kQ9RrX5r8Q2asLY7ukAoh5lfndyVZpqALvv9frcCOgejc&quot;);
+                  "
+                ></div>
+              </div>
+              <div class="flex items-center gap-3 mb-3">
+                <span class="material-symbols-outlined text-primary"
+                  >verified</span
+                >
+                <h3 class="text-slate-900 dark:text-white text-xl font-bold">
+                  VIP Trading Signals
+                </h3>
+              </div>
+              <p
+                class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6"
+              >
+                Real-time, high-accuracy trading signals generated by advanced
+                AI algorithms and seasoned market analysts.
+              </p>
+            </div>
+
+            <!-- Card 4: Fund Recovery Assistance -->
+            <div
+              class="group flex flex-col bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden hover:border-primary/50 transition-all p-6"
+            >
+              <div
+                class="mb-6 overflow-hidden rounded-lg aspect-video bg-slate-100 dark:bg-slate-800 relative"
+              >
+                <div
+                  class="absolute inset-0 flex items-center justify-center text-primary/20"
+                >
+                  <span class="material-symbols-outlined text-6xl"
+                    >lock_reset</span
+                  >
+                </div>
+                <div
+                  class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+                  style="
+                    background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuB1kOia2ioVZLgLERvm37M_SwxkodfNfIOTku6yPp6Hb1vgcgMGUy1f1Bx-Z7cskY7rQUKw3GdhYLVy-aDMCyVFfxd3dojcUbmIF7Q4CSwDLyXK1SiWoMEqqunbHBdIHMlqpQggC31xhat3RH7cic92l0HTz8avuqadbXWfKZbw_sCp7cZMIhn92ogwkGvP80CZ1C7E_qOCHcvLmexO1EKqqKr5tbYew91nrYALagXanWy1boYUvCH0C0hux3cJY3iv0CFt1SqDHC4&quot;);
+                  "
+                ></div>
+              </div>
+              <div class="flex items-center gap-3 mb-3">
+                <span class="material-symbols-outlined text-primary"
+                  >security</span
+                >
+                <h3 class="text-slate-900 dark:text-white text-xl font-bold">
+                  Fund Recovery
+                </h3>
+              </div>
+              <p
+                class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6"
+              >
+                Professional aid in retrieving lost or inaccessible digital
+                assets using forensic blockchain analysis and legal assistance.
+              </p>
+            </div>
+
+            <!-- Card 5: Client Support (spans 2 columns on lg) -->
+            <div
+              class="group flex flex-col bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden hover:border-primary/50 transition-all p-6 lg:col-span-2"
+            >
+              <div class="flex flex-col md:flex-row gap-6">
+                <div
+                  class="w-full md:w-1/2 overflow-hidden rounded-lg aspect-video md:aspect-square bg-slate-100 dark:bg-slate-800 relative"
+                >
+                  <div
+                    class="absolute inset-0 flex items-center justify-center text-primary/20"
+                  >
+                    <span class="material-symbols-outlined text-6xl"
+                      >headset_mic</span
+                    >
+                  </div>
+                  <div
+                    class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+                    style="
+                      background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuDO-3lWrQBQBvjJOMrFYw699re9EXLE48kpsbF2FDvDja0OnUdyDpdKPX61VJFXPJR_MmfpdeZwaqrWrOkav7O11VD3GryPqvdYxS1M1BV4j0oDHAvgy__WjPkS_4JCSbtnvU4WV07MFjGiDM1lyusSYjKdBZCqZBostTI2bUmAqxC_57_RQfTmULoRcc99EJtBq9HyqTpc8FwTn0Vif_cUWkD0LU3tFb4pTB79vAxLTaExjZ4bpLEVYLSOwpxyMF4BnbU_g9Q_pH0&quot;);
+                    "
+                  ></div>
+                </div>
+                <div class="w-full md:w-1/2 flex flex-col">
+                  <div class="flex items-center gap-3 mb-3">
+                    <span class="material-symbols-outlined text-primary"
+                      >support_agent</span
+                    >
+                    <h3
+                      class="text-slate-900 dark:text-white text-xl font-bold"
+                    >
+                      24/7 Priority Support
+                    </h3>
+                  </div>
+                  <p
+                    class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6"
+                  >
+                    Dedicated concierge assistance for all your financial
+                    inquiries. Our experts are available around the clock to
+                    ensure your trading experience is seamless and secure.
+                  </p>
+                  <div class="mt-auto space-y-4">
+                    <div
+                      class="flex items-center gap-3 text-sm text-slate-500 dark:text-slate-400"
+                    >
+                      <span
+                        class="material-symbols-outlined text-primary text-base"
+                        >check_circle</span
+                      >
+                      Live chat response in &lt; 2 minutes
+                    </div>
+                    <div
+                      class="flex items-center gap-3 text-sm text-slate-500 dark:text-slate-400"
+                    >
+                      <span
+                        class="material-symbols-outlined text-primary text-base"
+                        >check_circle</span
+                      >
+                      Multilingual expert advisors
+                    </div>
+                    <a
+                      href="https://wa.me/234XXXXXXXXXX"
+                      class="flex items-center gap-2 text-primary text-sm font-bold hover:gap-3 transition-all pt-2"
+                    >
+                      Learn More
+                      <span class="material-symbols-outlined text-sm"
+                        >arrow_forward</span
+                      >
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Call to Action -->
+      <div class="bg-primary/5 dark:bg-slate-900 py-16 px-6">
+        <div class="max-w-[720px] mx-auto text-center flex flex-col gap-8">
+          <div class="flex flex-col gap-4">
+            <h2
+              class="text-slate-900 dark:text-white text-3xl md:text-4xl font-black leading-tight tracking-[-0.033em]"
+            >
+              Ready to elevate your trading?
+            </h2>
+            <p
+              class="text-slate-600 dark:text-slate-400 text-lg font-normal leading-normal"
+            >
+              Join thousands of elite clients using our integrated fintech
+              services today. Secure your financial future with THEBRAVE
+              FINANCE.
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-4 justify-center">
+            <a
+              href="register.html"
+              class="flex min-w-[180px] cursor-pointer items-center justify-center rounded-xl h-14 px-8 bg-primary text-white text-base font-bold transition-all hover:scale-[1.02]"
+            >
+              <span class="truncate">Open Account</span>
+            </a>
+            <a
+              href="https://wa.me/234XXXXXXXXXX"
+              class="flex min-w-[180px] cursor-pointer items-center justify-center rounded-xl h-14 px-8 bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-white text-base font-bold transition-all hover:bg-slate-300 dark:hover:bg-slate-700"
+            >
+              <span class="truncate">Contact Sales</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer with sheet triggers -->
+    <footer class="border-t border-border-dark bg-background-dark pt-16 pb-8">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div
+          class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-10 mb-14"
+        >
+          <div class="col-span-2">
+            <div class="flex items-center gap-3 mb-5">
+              <img
+                src="images/TBF-LOGO.png"
+                alt="TheBrave Finance Logo"
+                class="w-9 h-9 object-contain"
+              />
+              <h2 class="text-white text-xl font-extrabold tracking-tight">
+                THEBRAVE FINANCE
+              </h2>
+            </div>
+            <p class="text-slate-500 text-sm max-w-sm leading-relaxed">
+              Premium trading solutions, structured financial services, and a
+              better client experience built around clarity and trust.
+            </p>
+          </div>
+
+          <div>
+            <h6 class="text-white font-bold mb-5">Company</h6>
+            <ul class="space-y-3 text-sm text-slate-500">
+              <li>
+                <a
+                  href="aboutus.html"
+                  class="hover:text-primary transition-colors"
+                  >About Us</a
+                >
+              </li>
+              <li>
+                <button
+                  onclick="openSheet('privacy')"
+                  class="hover:text-primary transition-colors text-left"
+                >
+                  Privacy Policy
+                </button>
+              </li>
+              <li>
+                <button
+                  onclick="openSheet('terms')"
+                  class="hover:text-primary transition-colors text-left"
+                >
+                  Terms of Service
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h6 class="text-white font-bold mb-5">Services</h6>
+            <ul class="space-y-3 text-sm text-slate-500">
+              <li>
+                <a
+                  href="services.html"
+                  class="hover:text-primary transition-colors"
+                  >Services</a
+                >
+              </li>
+              <li>
+                <a href="vip.html" class="hover:text-primary transition-colors"
+                  >VIP Signals</a
+                >
+              </li>
+              <li>
+                <a
+                  href="recovery.html"
+                  class="hover:text-primary transition-colors"
+                  >Recovery</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h6 class="text-white font-bold mb-5">Support</h6>
+            <ul class="space-y-3 text-sm text-slate-500">
+              <li>
+                <a
+                  href="contactus.html"
+                  class="hover:text-primary transition-colors"
+                  >Contact Support</a
+                >
+              </li>
+              <li>
+                <a
+                  href="login.html"
+                  class="hover:text-primary transition-colors"
+                  >Client Login</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="pt-8 border-t border-border-dark text-center">
+          <p class="text-slate-500 text-sm">
+            © 2000 TheBrave Finance Integrated Services. All rights reserved.
+            &nbsp;·&nbsp;
+            <button
+              onclick="openSheet('privacy')"
+              class="hover:text-primary transition-colors"
+            >
+              Privacy Policy
+            </button>
+            &nbsp;·&nbsp;
+            <button
+              onclick="openSheet('terms')"
+              class="hover:text-primary transition-colors"
+            >
+              Terms of Service
+            </button>
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Sheet Overlay -->
+    <div id="sheetOverlay" class="sheet-overlay" onclick="closeSheet()"></div>
+
+    <!-- Bottom Sheet -->
+    <div id="bottomSheet" class="sheet">
+      <div
+        class="sticky top-0 bg-[#0f1825] px-6 pt-5 pb-4 border-b border-[#1e293b] flex items-center justify-between"
+      >
+        <div class="flex items-center gap-3">
+          <div
+            class="h-9 w-9 rounded-xl bg-primary/20 flex items-center justify-center"
+          >
+            <i data-lucide="file-text" class="w-4 h-4 text-primary"></i>
+          </div>
+          <h3 id="sheetTitle" class="text-white font-extrabold text-base"></h3>
+        </div>
+        <button
+          onclick="closeSheet()"
+          class="text-slate-400 hover:text-white p-1.5 rounded-lg hover:bg-white/5 transition-all"
+        >
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div class="flex justify-center pt-2 pb-1">
+        <div class="w-10 h-1 bg-[#243049] rounded-full"></div>
+      </div>
+      <div
+        id="sheetContent"
+        class="px-6 pb-10 pt-2 text-slate-300 text-sm leading-relaxed space-y-6"
+      ></div>
+    </div>
+
+    <script src="js/menu.js"></script>
+    <script>
+      // Complete terms and privacy content (identical to login page)
+      const CONTENT = {
+        terms: {
+          title: "Terms of Service",
+          html: `
+            <p class="text-slate-400 text-xs">Last updated: January 1, 2026</p>
+            <div class="space-y-2"><h4 class="text-white font-bold">1. Acceptance of Terms</h4><p>By accessing or using TheBrave Finance ("the Platform"), you agree to be bound by these Terms of Service. If you do not agree to any part of these terms, you may not access or use our services.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">2. Description of Services</h4><p>TheBrave Finance provides financial trading tools, market analysis, VIP signal subscriptions, and account management features. Our platform is designed to assist traders in making informed decisions. We do not provide regulated financial advice.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">3. Eligibility</h4><p>You must be at least 18 years of age to use our services. By registering, you represent and warrant that you are legally permitted to engage in trading activities in your jurisdiction. TheBrave Finance reserves the right to refuse service to anyone at any time.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">4. Account Responsibility</h4><p>You are solely responsible for maintaining the confidentiality of your account credentials, including your MT5 login ID and password. Any activity that occurs under your account is your responsibility. Notify us immediately if you suspect unauthorized access.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">5. Deposits & Payments</h4><p>All deposits are processed in cryptocurrency. Once submitted, deposits cannot be reversed except at the sole discretion of TheBrave Finance. Proof of payment must be accurate and valid. Fraudulent submissions will result in immediate account termination.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">6. VIP Signals</h4><p>VIP signals are provided for informational purposes only. Past performance of any signal does not guarantee future results. All trading involves risk and you may lose some or all of your invested capital. TheBrave Finance is not liable for any trading losses incurred using our signals.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">7. Prohibited Activities</h4><p>You agree not to: use the platform for any unlawful purpose; attempt to gain unauthorized access to any part of the platform; reverse engineer or exploit the platform; or use automated systems to access our services without prior written consent.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">8. Termination</h4><p>We reserve the right to suspend or terminate your account at any time, with or without notice, for conduct that we believe violates these Terms or is harmful to other users, us, or third parties.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">9. Limitation of Liability</h4><p>TheBrave Finance shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of or inability to use the platform, even if we have been advised of the possibility of such damages.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">10. Changes to Terms</h4><p>We reserve the right to modify these Terms at any time. Continued use of the platform after any changes constitutes your acceptance of the new terms. We encourage you to review these Terms periodically.</p></div>
+            <div class="p-4 rounded-xl bg-primary/10 border border-primary/20"><p class="text-blue-400 text-xs">If you have questions about these Terms, please contact our support team through the platform.</p></div>
+          `,
+        },
+        privacy: {
+          title: "Privacy Policy",
+          html: `
+            <p class="text-slate-400 text-xs">Last updated: January 1, 2026</p>
+            <div class="space-y-2"><h4 class="text-white font-bold">1. Introduction</h4><p>TheBrave Finance ("we", "our", "us") is committed to protecting your personal information. This Privacy Policy explains how we collect, use, store, and protect your data when you use our platform.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">2. Information We Collect</h4><p>We collect information you provide directly, including your name, email address, phone number, and profile photo (via Google OAuth). We also collect transactional data such as deposit records, payment proofs, and account activity on our platform.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">3. How We Use Your Information</h4><p>Your information is used to: create and manage your account; process and verify deposits; assign and manage your MT5 trading accounts; deliver VIP signals and subscription services; communicate important account updates; and improve our platform and services.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">4. Google OAuth</h4><p>We use Google's OAuth 2.0 for authentication. When you sign in with Google, we receive your name, email address, and profile photo. We do not have access to your Google password or any other Google account data beyond what is required for authentication.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">5. Data Storage & Security</h4><p>Your data is stored securely on encrypted servers. We use industry-standard security measures including HTTPS, HTTP-only cookies, and hashed credentials to protect your information. While we strive to protect your data, no method of transmission over the internet is 100% secure.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">6. MT5 Credentials</h4><p>Your MT5 login credentials assigned by our administrators are stored in our system to allow you to view them in your dashboard. You are responsible for keeping these credentials confidential. We recommend not sharing your MT5 password with anyone.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">7. Cookies</h4><p>We use secure, HTTP-only cookies to maintain your authenticated session. These cookies are essential for the platform to function and are not used for advertising or tracking purposes. Cookies expire after 30 days of inactivity.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">8. Third-Party Services</h4><p>We use Cloudinary for secure image storage (profile photos and payment proofs). Files uploaded to our platform are stored on Cloudinary's encrypted servers. We do not sell or share your data with any third party for marketing purposes.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">9. Your Rights</h4><p>You have the right to access, correct, or delete your personal data at any time. You may request account deletion by contacting our support team. Upon deletion, your data will be permanently removed from our systems within 30 days.</p></div>
+            <div class="space-y-2"><h4 class="text-white font-bold">10. Changes to This Policy</h4><p>We may update this Privacy Policy from time to time. We will notify you of any significant changes via the platform. Your continued use of the platform after changes constitutes acceptance of the updated policy.</p></div>
+            <div class="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20"><p class="text-emerald-400 text-xs">Your privacy matters to us. We never sell your data and never will. TheBrave Finance is built on trust.</p></div>
+          `,
+        },
+      };
+
+      function openSheet(type) {
+        const data = CONTENT[type];
+        if (!data) return;
+        document.getElementById("sheetTitle").textContent = data.title;
+        document.getElementById("sheetContent").innerHTML = data.html;
+        document.getElementById("bottomSheet").classList.add("open");
+        document.getElementById("sheetOverlay").classList.add("open");
+        document.body.style.overflow = "hidden";
+        if (typeof lucide !== "undefined") lucide.createIcons();
+      }
+
+      function closeSheet() {
+        document.getElementById("bottomSheet").classList.remove("open");
+        document.getElementById("sheetOverlay").classList.remove("open");
+        document.body.style.overflow = "";
+      }
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeSheet();
+      });
+
+      // Initialize Lucide icons
+      if (typeof lucide !== "undefined") lucide.createIcons();
+    </script>
+  </body>
+</html>
