@@ -3,7 +3,7 @@ const API = (() => {
     window.location.hostname === "localhost" ||
     window.location.hostname === "127.0.0.1"
       ? "http://localhost:8000/api"
-      : "https://tbfinance.onrender.com/api";
+      : "https://thebravefinance.onrender.com/api";
 
   function getStoredToken(endpoint = "") {
     const lowerEndpoint = endpoint.toLowerCase();
