@@ -36,22 +36,14 @@ const requestWithdrawal = asyncHandler(async (req, res) => {
     {
       $match: {
         user: user._id,
-        type: "deposit",
         status: "approved",
+        type: { $in: ["deposit", "balance_adjustment"] },
       },
     },
     {
       $group: {
         _id: null,
-        totalDeposited: {
-          $sum: {
-            $cond: [
-              { $gt: ["$creditedAmount", 0] },
-              "$creditedAmount",
-              "$amount",
-            ],
-          },
-        },
+        totalDeposited: { $sum: "$creditedAmount" },
       },
     },
   ]);
