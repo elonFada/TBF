@@ -295,13 +295,12 @@
 
               <div class="flex flex-wrap gap-4">
                 <a
-                  class="px-8 py-4 bg-emerald-accent text-white font-bold rounded-xl hover:scale-105 transition-transform shadow-xl shadow-emerald-accent/30 inline-flex items-center gap-2"
-                  href="https://wa.me/16139429020"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  class="recovery-protected-btn px-8 py-4 bg-emerald-accent text-white font-bold rounded-xl hover:scale-105 transition-transform shadow-xl shadow-emerald-accent/30 inline-flex items-center gap-2"
+                  href="#"
+                  data-recovery-url="recovery-request.html"
                 >
                   <i data-lucide="message-circle" class="w-5 h-5"></i>
-                  Chat With an Agent
+                  Make Recovery Request
                 </a>
 
                 <a
@@ -574,11 +573,12 @@
                   </div>
 
                   <a
-                    href="https://wa.me/1234567890"
-                    class="inline-flex items-center justify-center gap-2 px-6 py-4 bg-emerald-accent hover:bg-emerald-600 text-white font-black rounded-xl transition-all whitespace-nowrap"
+                    class="recovery-protected-btn inline-flex items-center justify-center gap-2 px-6 py-4 bg-emerald-accent hover:bg-emerald-600 text-white font-black rounded-xl transition-all whitespace-nowrap"
+                    href="#"
+                    data-recovery-url="recovery-request.html"
                   >
                     <i data-lucide="message-circle" class="w-5 h-5"></i>
-                    Chat With an Agent
+                    Make Recovery Request
                   </a>
                 </div>
               </div>
@@ -655,12 +655,13 @@
                   No long form. No delay. Just direct contact with an agent.
                 </p>
                 <a
-                  class="flex items-center gap-3 p-4 bg-white/10 hover:bg-white/20 rounded-xl transition-colors border border-white/10"
-                  href="https://wa.me/1234567890"
+                  class="recovery-protected-btn flex items-center gap-3 p-4 bg-white/10 hover:bg-white/20 rounded-xl transition-colors border border-white/10"
+                  href="#"
+                  data-recovery-url="recovery-request.html"
                 >
                   <i data-lucide="message-square" class="w-5 h-5"></i>
                   <div class="text-sm">
-                    <p class="font-bold">Chat With an Agent</p>
+                    <p class="font-bold">Make Recovery Request</p>
                     <p
                       class="opacity-70 text-[10px] uppercase font-bold tracking-widest"
                     >
@@ -828,11 +829,12 @@
               </p>
               <div class="flex justify-center">
                 <a
-                  class="px-8 sm:px-12 py-4 sm:py-5 bg-white text-emerald-600 font-black rounded-2xl shadow-2xl hover:scale-105 transition-transform inline-flex items-center gap-2"
-                  href="https://wa.me/1234567890"
+                  class="recovery-protected-btn px-8 sm:px-12 py-4 sm:py-5 bg-white text-emerald-600 font-black rounded-2xl shadow-2xl hover:scale-105 transition-transform inline-flex items-center gap-2"
+                  href="#"
+                  data-recovery-url="recovery-request.html"
                 >
                   <i data-lucide="message-circle" class="w-5 h-5"></i>
-                  Chat With an Agent
+                  Make Recovery Request
                 </a>
               </div>
             </div>
@@ -995,7 +997,7 @@
 
     <script src="js/menu.js"></script>
     <script>
-      // Complete terms and privacy content (identical to login page)
+      // Complete terms and privacy content
       const CONTENT = {
         terms: {
           title: "Terms of Service",
@@ -1032,6 +1034,61 @@
           `,
         },
       };
+
+      // Function to get the correct base path
+      function getBasePath() {
+        // Check if we're in local development (contains /frontend/ in the path)
+        if (window.location.pathname.includes("/frontend/")) {
+          return "/frontend/";
+        }
+        // Production - just root
+        return "/";
+      }
+
+      // Function to check authentication and redirect
+      async function checkAuthAndRedirect(targetUrl) {
+        try {
+          const response = await fetch("/api/users/profile", {
+            method: "GET",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+
+          if (response.ok) {
+            // User is logged in, proceed to recovery-request.html
+            // Use relative path - works for both localhost and production
+            window.location.href = targetUrl;
+          } else {
+            // Not logged in, store redirect and go to login
+            // Store the full relative path
+            localStorage.setItem("redirectAfterLogin", targetUrl);
+            window.location.href = "login.html";
+          }
+        } catch (error) {
+          localStorage.setItem("redirectAfterLogin", targetUrl);
+          window.location.href = "login.html";
+        }
+      }
+
+      // Protect all recovery request buttons on the page
+      document.addEventListener("DOMContentLoaded", function () {
+        const recoveryButtons = document.querySelectorAll(
+          ".recovery-protected-btn",
+        );
+
+        recoveryButtons.forEach((button) => {
+          button.addEventListener("click", async (e) => {
+            e.preventDefault();
+            // Get the relative URL from data attribute
+            const targetUrl =
+              button.getAttribute("data-recovery-url") ||
+              "recovery-request.html";
+            await checkAuthAndRedirect(targetUrl);
+          });
+        });
+      });
 
       function openSheet(type) {
         const data = CONTENT[type];

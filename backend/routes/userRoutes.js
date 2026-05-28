@@ -1,44 +1,50 @@
 import express from "express";
-import { googleAuth, logoutUser, updateProfile, getUsers } from "../controllers/userController.js";
-import {protect, adminProtect} from "../middleware/authMiddleware.js";
-
+import {
+  googleAuth,
+  updateProfile,
+  getUsers,
+  logoutUser,
+  getUserProfile,
+  loginUser,
+  registerUser
+} from "../controllers/userController.js";
+import { protect } from "../middleware/authMiddleware.js";
 import multer from "multer";
 import { v2 as cloudinary } from "cloudinary";
-import { CloudinaryStorage } from 'multer-storage-cloudinary';
+import { CloudinaryStorage } from "multer-storage-cloudinary";
 
 const router = express.Router();
 
-
-// Cloudinary config
+// Configure Cloudinary
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.API_KEY,
   api_secret: process.env.API_SECRET,
 });
 
-// Multer -> Cloudinary storage
-const storage = new CloudinaryStorage({
-  cloudinary,
+// Configure multer for profile picture uploads
+const profileStorage = new CloudinaryStorage({
+  cloudinary: cloudinary,
   params: {
-    folder: "The_Brave_ProfilePicture",
-    allowed_formats: ["jpg", "png", "jpeg", "webp", "avif"], // add webp if you want
-    // public_id: (req, file) => `receipt_${req.user._id}_${Date.now()}`,
+    folder: "The_Brave_Profile_Pictures",
+    allowed_formats: ["jpg", "png", "jpeg", "webp", "avif"],
+    transformation: [{ width: 500, height: 500, crop: "limit" }],
   },
 });
 
-const upload = multer({ storage });
+const uploadProfilePicture = multer({ storage: profileStorage });
 
-// Optional: test connection (DON'T block server startup if it fails)
-cloudinary.api
-  .ping()
-  .then(() => console.log("✅ Cloudinary connected successfully"))
-  .catch((err) => console.error("❌ Cloudinary not connected:", err.message));
-
+// Public routes
 router.post("/google", googleAuth);
-router.post("/logout", logoutUser);
-router.put("/profile", protect, upload.single('profile'), updateProfile);
+router.post("/login", loginUser);
+router.post("/register", registerUser);
 
-//admin routes
-router.get("/", adminProtect, getUsers);
+// Protected routes
+router.get("/profile", protect, getUserProfile);
+router.put("/profile", protect, uploadProfilePicture.single("profilePicture"), updateProfile);
+router.post("/logout", protect, logoutUser);
+
+// Admin routes
+router.get("/", protect, getUsers);
 
 export default router;

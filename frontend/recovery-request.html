@@ -945,18 +945,30 @@
         </div>
       </div>
     </div>
-
     <script src="./js/api.js"></script>
     <script>
       lucide.createIcons();
 
-      const user = JSON.parse(localStorage.getItem("user") || "null");
-      const token = localStorage.getItem("token");
+      // AUTHENTICATION CHECK - Same pattern as dashboard (check localStorage)
+      (function checkAuth() {
+        const user = JSON.parse(localStorage.getItem("user") || "null");
+        const token = localStorage.getItem("token");
 
-      if (!user || !token) {
-        localStorage.removeItem("user");
-        localStorage.removeItem("token");
-        window.location.href = "login.html";
+        if (!user || !token) {
+          // Not logged in - store the page they were trying to access
+          localStorage.setItem("redirectAfterLogin", "recovery-request.html");
+          window.location.href = "login.html";
+          return;
+        }
+
+        // User is logged in, initialize the page
+        initializePage();
+      })();
+
+      function initializePage() {
+        loadUserInfo();
+        loadRecoveryHistory();
+        lucide.createIcons();
       }
 
       const RECOVERY_SUBMISSION_FEE = 23.8;
@@ -976,11 +988,9 @@
           success: "bg-emerald-900/90 border-emerald-500/40 text-emerald-300",
           error: "bg-rose-900/90 border-rose-500/40 text-rose-300",
         };
-
         el.className = `px-4 py-3 rounded-xl border text-sm font-medium flex items-center gap-2 shadow-2xl max-w-sm ${colors[type]}`;
         el.innerHTML = `<span>${msg}</span>`;
         el.classList.add("show");
-
         setTimeout(() => el.classList.remove("show"), 4000);
       }
 
@@ -1009,12 +1019,13 @@
       }
 
       function loadUserInfo() {
+        const user = JSON.parse(localStorage.getItem("user") || "null");
         document.getElementById("headerName").textContent =
-          user.name || "Trader";
-        document.getElementById("fullName").value = user.name || "";
-        document.getElementById("email").value = user.email || "";
+          user?.name || "Trader";
+        document.getElementById("fullName").value = user?.name || "";
+        document.getElementById("email").value = user?.email || "";
 
-        if (user.profile) {
+        if (user?.profile) {
           document.getElementById("headerAvatarWrap").innerHTML =
             `<img src="${user.profile}" alt="avatar" class="avatar-img" />`;
         }
@@ -1237,8 +1248,9 @@
       }
 
       function resetRecoveryForm() {
-        document.getElementById("fullName").value = user.name || "";
-        document.getElementById("email").value = user.email || "";
+        const user = JSON.parse(localStorage.getItem("user") || "null");
+        document.getElementById("fullName").value = user?.name || "";
+        document.getElementById("email").value = user?.email || "";
         document.getElementById("lostAmount").value = "";
         document.getElementById("asset").value = "";
         document.getElementById("platform").value = "";
@@ -1266,10 +1278,10 @@
 
           if (!requests.length) {
             list.innerHTML = `
-              <div class="px-4 sm:px-6 py-6 text-center text-slate-500 text-xs">
-                No recovery requests yet.
-              </div>
-            `;
+          <div class="px-4 sm:px-6 py-6 text-center text-slate-500 text-xs">
+            No recovery requests yet.
+          </div>
+        `;
             return;
           }
 
@@ -1312,98 +1324,72 @@
               };
 
               return `
-                <div class="px-4 sm:px-6 py-4 flex items-start gap-3 sm:gap-4">
-                  <div class="h-9 w-9 sm:h-10 sm:w-10 rounded-full ${statusConfig.iconWrap} flex items-center justify-center flex-shrink-0">
-                    <i data-lucide="${statusConfig.icon}" class="w-4 h-4 sm:w-5 sm:h-5"></i>
-                  </div>
+          <div class="px-4 sm:px-6 py-4 flex items-start gap-3 sm:gap-4">
+            <div class="h-9 w-9 sm:h-10 sm:w-10 rounded-full ${statusConfig.iconWrap} flex items-center justify-center flex-shrink-0">
+              <i data-lucide="${statusConfig.icon}" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+            </div>
 
-                  <div class="flex-1 min-w-0">
-                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-                      <div>
-                        <p class="text-white font-bold text-sm truncate">
-                          ${r.asset} recovery — $${Number(
-                            r.lostAmount || 0,
-                          ).toLocaleString("en-US", {
-                            minimumFractionDigits: 2,
-                          })}
-                        </p>
-                        <p class="text-[11px] text-slate-500 mt-1">
-                          ${r.platform} • ${new Date(
-                            r.createdAt,
-                          ).toLocaleDateString("en-US", {
-                            month: "short",
-                            day: "numeric",
-                            year: "numeric",
-                          })}
-                        </p>
-                      </div>
-
-                      <span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border ${statusConfig.badge} whitespace-nowrap self-start">
-                        ${statusConfig.text}
-                      </span>
-                    </div>
-
-                    <div class="mt-3 grid sm:grid-cols-2 gap-2 text-xs">
-                      <div class="text-slate-400">
-                        <span class="text-slate-500">Incident:</span>
-                        ${r.incidentType || "--"}
-                      </div>
-                      <div class="text-slate-400">
-                        <span class="text-slate-500">Submission Fee:</span>
-                        $${Number(r.submissionFee || 0).toLocaleString(
-                          "en-US",
-                          {
-                            minimumFractionDigits: 2,
-                          },
-                        )}
-                      </div>
-                    </div>
-
-                    <div class="mt-3">
-                      <p class="text-xs ${
-                        r.status === "approved"
-                          ? "text-emerald-accent"
-                          : r.status === "rejected"
-                            ? "text-rose-400"
-                            : "text-amber-400"
-                      }">
-                        ${statusConfig.message}
-                      </p>
-
-                      ${
-                        r.status === "approved" && statusConfig.whatsappContact
-                          ? `
-                            <div class="mt-3 p-3 rounded-xl bg-emerald-accent/10 border border-emerald-accent/20">
-                              <p class="text-[10px] text-slate-400 uppercase tracking-widest font-bold mb-2">
-                                Special Agent Contact
-                              </p>
-
-                              <a
-                                href="${statusConfig.whatsappContact.link}"
-                                target="_blank"
-                                class="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl text-xs font-bold transition-all"
-                              >
-                                <i data-lucide="message-circle" class="w-4 h-4"></i>
-                                ${statusConfig.whatsappContact.label}
-                              </a>
-                            </div>
-                          `
-                          : ""
-                      }
-                    </div>
-                  </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                <div>
+                  <p class="text-white font-bold text-sm truncate">
+                    ${r.asset} recovery — $${Number(r.lostAmount || 0).toLocaleString("en-US", { minimumFractionDigits: 2 })}
+                  </p>
+                  <p class="text-[11px] text-slate-500 mt-1">
+                    ${r.platform} • ${new Date(r.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+                  </p>
                 </div>
-              `;
+
+                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border ${statusConfig.badge} whitespace-nowrap self-start">
+                  ${statusConfig.text}
+                </span>
+              </div>
+
+              <div class="mt-3 grid sm:grid-cols-2 gap-2 text-xs">
+                <div class="text-slate-400">
+                  <span class="text-slate-500">Incident:</span>
+                  ${r.incidentType || "--"}
+                </div>
+                <div class="text-slate-400">
+                  <span class="text-slate-500">Submission Fee:</span>
+                  $${Number(r.submissionFee || 0).toLocaleString("en-US", { minimumFractionDigits: 2 })}
+                </div>
+              </div>
+
+              <div class="mt-3">
+                <p class="text-xs ${r.status === "approved" ? "text-emerald-accent" : r.status === "rejected" ? "text-rose-400" : "text-amber-400"}">
+                  ${statusConfig.message}
+                </p>
+
+                ${
+                  r.status === "approved" && statusConfig.whatsappContact
+                    ? `
+                  <div class="mt-3 p-3 rounded-xl bg-emerald-accent/10 border border-emerald-accent/20">
+                    <p class="text-[10px] text-slate-400 uppercase tracking-widest font-bold mb-2">
+                      Special Agent Contact
+                    </p>
+                    <a href="${statusConfig.whatsappContact.link}" target="_blank" class="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl text-xs font-bold transition-all">
+                      <i data-lucide="message-circle" class="w-4 h-4"></i>
+                      ${statusConfig.whatsappContact.label}
+                    </a>
+                  </div>
+                `
+                    : ""
+                }
+              </div>
+            </div>
+          </div>
+        `;
             })
             .join("");
 
           lucide.createIcons();
         } catch (err) {
           list.innerHTML = `
-            <div class="px-4 sm:px-6 py-6 text-center text-slate-500 text-xs">
-              Failed to load recovery requests.
-            </div>
-          `;
+        <div class="px-4 sm:px-6 py-6 text-center text-slate-500 text-xs">
+          Failed to load recovery requests.
+        </div>
+      `;
         }
       }
 
@@ -1412,6 +1398,7 @@
           await API.post("/users/logout");
         } catch {}
 
+        localStorage.removeItem("redirectAfterLogin");
         localStorage.removeItem("user");
         localStorage.removeItem("token");
         window.location.href = "login.html";
@@ -1452,7 +1439,6 @@
             ) {
               closeSidebarFunc();
             }
-
             if (e.key === "Escape") {
               closePaymentModal();
             }
@@ -1462,14 +1448,10 @@
 
       document
         .getElementById("logoutBtn")
-        .addEventListener("click", handleLogout);
+        ?.addEventListener("click", handleLogout);
       document
         .getElementById("mobileLogoutBtn")
-        .addEventListener("click", handleLogout);
-
-      loadUserInfo();
-      loadRecoveryHistory();
-      lucide.createIcons();
+        ?.addEventListener("click", handleLogout);
     </script>
   </body>
 </html>

@@ -151,7 +151,7 @@ const updateProfile = asyncHandler(async (req, res) => {
   }
 
   const { name } = req.body;
-  const profilePicture = req.file?.path; // Cloudinary returns the URL in req.file.path
+  const profilePicture = req.file?.path;
 
   if (name) user.name = name;
   if (profilePicture) user.profile = profilePicture;
@@ -187,4 +187,109 @@ const logoutUser = asyncHandler(async (req, res) => {
   res.status(200).json({ message: "Logged out successfully" });
 });
 
-export { googleAuth, updateProfile, getUsers,  logoutUser };
+// @desc    Get user profile
+// @route   GET /api/users/profile
+// @access  Private
+const getUserProfile = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id).select('-password');
+  if (user) {
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
+      profile: user.profile,
+      username: user.username,
+      authMethod: user.authMethod,
+      isVerified: user.isVerified
+    });
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
+});
+
+// @desc    Login user with email/password
+// @route   POST /api/users/login
+// @access  Public
+const loginUser = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+  
+  const user = await User.findOne({ email });
+  
+  if (user && (await user.matchPassword(password))) {
+    const token = generateToken(res, user._id);
+    
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
+      profile: user.profile,
+      username: user.username,
+      authMethod: user.authMethod,
+      token,
+    });
+  } else {
+    res.status(401);
+    throw new Error('Invalid email or password');
+  }
+});
+
+// @desc    Register user
+// @route   POST /api/users/register
+// @access  Public
+const registerUser = asyncHandler(async (req, res) => {
+  const { name, email, password, phone, username } = req.body;
+  
+  const userExists = await User.findOne({ $or: [{ email }, { username }] });
+  
+  if (userExists) {
+    res.status(400);
+    throw new Error('User already exists with this email or username');
+  }
+  
+  const finalUsername = username || email.split('@')[0];
+  
+  let uniqueUsername = finalUsername;
+  let counter = 1;
+  while (await User.findOne({ username: uniqueUsername })) {
+    uniqueUsername = `${finalUsername}${counter++}`;
+  }
+  
+  const user = await User.create({
+    name,
+    email,
+    password,
+    phone,
+    username: uniqueUsername,
+    authMethod: 'local'
+  });
+  
+  if (user) {
+    const token = generateToken(res, user._id);
+    
+    res.status(201).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
+      username: user.username,
+      authMethod: user.authMethod,
+      token,
+    });
+  } else {
+    res.status(400);
+    throw new Error('Invalid user data');
+  }
+});
+
+export { 
+  googleAuth, 
+  updateProfile, 
+  getUsers, 
+  logoutUser,
+  getUserProfile,
+  loginUser,
+  registerUser
+};

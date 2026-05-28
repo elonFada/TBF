@@ -426,7 +426,7 @@
         }
       }
 
-      function handleGoogleLogin() {
+      async function handleGoogleLogin() {
         hideError();
 
         const client = google.accounts.oauth2.initTokenClient({
@@ -466,7 +466,15 @@
                 }),
               );
 
-              window.location.href = "user-dashboard.html";
+              // Check for redirect after login
+              const redirectUrl = localStorage.getItem("redirectAfterLogin");
+              if (redirectUrl) {
+                localStorage.removeItem("redirectAfterLogin");
+                // Use the stored URL directly (it's just the filename)
+                window.location.href = redirectUrl;
+              } else {
+                window.location.href = "user-dashboard.html";
+              }
             } catch (error) {
               showError(error.message || "Login failed. Please try again.");
               setButtonLoading(false);
