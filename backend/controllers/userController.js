@@ -108,25 +108,47 @@ const googleAuth = asyncHandler(async (req, res) => {
 
   if (mode === "login") {
     if (!user) {
-      res.status(404);
-      throw new Error("No account found with this email. Please sign up first.");
-    }
+      // AUTO-CREATE ACCOUNT FOR NEW USERS - No need to sign up separately
+      const cleanedPhone = String(phone || "").trim();
+      
+      const baseUsername = (email?.split("@")[0] || name || "user")
+        .toLowerCase()
+        .replace(/\s+/g, "")
+        .replace(/[^a-z0-9_]/g, "") || "user";
 
-    if (!user.googleId) {
-      user.googleId = googleId;
-    }
+      let username = baseUsername;
+      let counter = 1;
 
-    if (!user.profile && picture) {
-      user.profile = picture;
-    }
+      while (await User.findOne({ username })) {
+        username = `${baseUsername}${counter++}`;
+      }
 
-    if (!user.name && name) {
-      user.name = name;
+      user = await User.create({
+        googleId,
+        name: name || "",
+        username,
+        email,
+        phone: cleanedPhone || "",
+        profile: picture || "",
+        password: `google-auth-${googleId}`,
+        isVerified: true,
+        authMethod: "google",
+      });
+    } else {
+      // Update existing user
+      if (!user.googleId) {
+        user.googleId = googleId;
+      }
+      if (!user.profile && picture) {
+        user.profile = picture;
+      }
+      if (!user.name && name) {
+        user.name = name;
+      }
+      user.isVerified = true;
+      user.authMethod = "google";
+      await user.save();
     }
-
-    user.isVerified = true;
-    user.authMethod = "google";
-    await user.save();
   }
 
   const token = generateToken(res, user._id);

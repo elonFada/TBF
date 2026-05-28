@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema(
     name: { type: String, required: true, trim: true },
     username: { type: String, required: true, unique: true, trim: true, lowercase: true },
     email: { type: String, required: true, unique: true, trim: true, lowercase: true },
-    phone: { type: String, required: true, trim: true },
+    phone: { type: String, trim: true, default: "" }, // Removed required: true
     profile: { type: String, default: "" },
     password: { type: String, required: true },
     isVerified: { type: Boolean, default: false },
