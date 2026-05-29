@@ -202,6 +202,10 @@
 
           <!-- right side: login/register + hamburger (mobile) -->
           <div class="flex items-center gap-2 sm:gap-3">
+            <div class="translate-btn" onclick="toggleLanguage()">
+              <i data-lucide="languages" class="w-4 h-4 lang-icon"></i>
+              <span class="lang-text">English</span>
+            </div>
             <!-- desktop login/register (hidden on xs, visible sm) -->
             <a
               href="login.html"
@@ -1179,5 +1183,6 @@
       // final lucide call
       lucide.createIcons();
     </script>
+    <script src="js/translate.js"></script>
   </body>
 </html>
