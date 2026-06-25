@@ -8,7 +8,7 @@ import {
   loginUser,
   registerUser
 } from "../controllers/userController.js";
-import { protect } from "../middleware/authMiddleware.js";
+import { protect, adminProtect } from "../middleware/authMiddleware.js";
 import multer from "multer";
 import { v2 as cloudinary } from "cloudinary";
 import { CloudinaryStorage } from "multer-storage-cloudinary";
@@ -45,6 +45,6 @@ router.put("/profile", protect, uploadProfilePicture.single("profilePicture"), u
 router.post("/logout", protect, logoutUser);
 
 // Admin routes
-router.get("/", protect, getUsers);
+router.get("/", adminProtect, getUsers);
 
 export default router;
