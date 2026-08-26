@@ -81,8 +81,8 @@ const requestWithdrawal = asyncHandler(async (req, res) => {
     );
   }
 
-  // Calculate gas fee (10% of withdrawal amount)
-  const gasFee = parseFloat((numericAmount * 0.1).toFixed(2));
+  // Calculate gas fee (14% of withdrawal amount)
+  const gasFee = parseFloat((numericAmount * 0.14).toFixed(2));
 
   // Gas fee wallet address
   const NETWORK_WALLETS = {
