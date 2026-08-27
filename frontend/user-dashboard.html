@@ -1362,7 +1362,7 @@
             const val = parseFloat(amountInput.value);
             const notice = document.getElementById("gasFeeNotice");
             if (val > 0) {
-              const fee = (val * 0.1).toFixed(2);
+              const fee = (val * 0.14).toFixed(2);
               document.getElementById("gasFeeAmount").textContent =
                 `$${parseFloat(fee).toLocaleString("en-US", { minimumFractionDigits: 2 })}`;
               notice.classList.remove("hidden");
